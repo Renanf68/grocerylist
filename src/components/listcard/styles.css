@@ -1,0 +1,58 @@
+.list-card {
+  background-color: white;
+  border-top: 4px solid #36aec6;
+  border-radius: 4px;
+  padding: 12px 15px;
+  box-shadow: 4px 4px 4px #888;
+  margin-bottom: 30px;
+}
+.list-header-title {
+  display: flex;
+  justify-content: flex-start;
+}
+.list-header-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 8px;
+}
+.list-header-btn button {
+  padding: 1px 6px !important;
+}
+.list-header-btn svg {
+  height: 1.5em;
+  width: 1.5em;
+}
+.list-table th {
+  font-size: 0.8rem;
+}
+.list-table td {
+  font-size: 0.8rem;
+  vertical-align: middle !important;
+}
+.list-item-btns {
+  padding: 2px 8px !important;
+  margin: 0 3px;
+}
+.list-item-btn-edit {
+  padding: 2px 8px !important;
+  margin: 0 3px;
+  font-size: 0.8rem;
+  background-color: khaki !important;
+}
+.empty-list-message {
+  padding: 12px 0 !important;
+  font-size: 16px;
+  color: darkgrey;
+  text-align: center;
+  background-color: gainsboro;
+}
+.spinner-grow {
+  width: 0.2rem !important;
+  height: 0.2rem !important;
+  margin: 0 1px 4px 0;
+}
+.list-card-total {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+}
