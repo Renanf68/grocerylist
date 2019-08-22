@@ -44,7 +44,7 @@ const ListCard = props => {
           <button
             title='Adicionar item' 
             className='btn btn-success'>
-            <MdPlaylistAdd />
+            Add Item <MdPlaylistAdd />
           </button>
         </Col>
       </Row>

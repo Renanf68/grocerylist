@@ -12,6 +12,15 @@
   box-shadow: 4px 4px 4px #888;
   margin-bottom: 30px;
 }
+.login-logo-container {
+  text-align: center;
+}
+#login-logo {
+  width: 2.4em;
+  height: 2.4em;
+  margin-bottom: 4px;
+  color: #df4723;
+}
 .login-box h4 {
   text-align: center;
 }

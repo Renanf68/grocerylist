@@ -9,7 +9,7 @@ const MainHeader = props => {
       <Row>
         <Col xs={6} className='nav-logo-container'>
           <button onClick={() => {}}
-            id='logo' title='Menu'>
+            id='nav-logo' title='Menu'>
             <FaShoppingBag />
           </button>
         </Col>

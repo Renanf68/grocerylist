@@ -1,0 +1,15 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.home-container button {
+  width: 100%;
+  margin: 6px;
+}
+#home-new-list {
+  height: 1.4em;
+  width: 1.4em;
+}

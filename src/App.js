@@ -28,7 +28,11 @@ function App() {
       .createUserWithEmailAndPassword(email, password)
       .catch(
         function(error) {
-          setAuthError(error)
+          if (error.code === 'auth/invalid-email') {
+            setAuthError('Formato de email inválido.')
+          } else {
+            setAuthError('Erro não identificado.')
+          }
         }
       );
   }

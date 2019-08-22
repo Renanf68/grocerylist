@@ -8,6 +8,7 @@ import {
   Alert,
   Spinner
 } from "reactstrap";
+import { FaShoppingBag } from 'react-icons/fa' 
 
 import './styles.css'
 
@@ -18,11 +19,19 @@ const Login = props => {
   const [passwd2, setPasswd2] = useState('')
   const [formErr, setFormErr] = useState(null)
   const [sending, setSending] = useState(false)
+  const clearMsgs = () => {
+    setFormErr(null)
+    props.clearErr()
+  }
+  const clearFields = () => {
+    setEmail('')
+    setPasswd('')
+    setPasswd2('')
+  }
   const signUpSubmit = () => {
     if(passwd === passwd2) {
       setSending(true)
-      props.clearErr()
-      setFormErr(null)
+      clearMsgs()
       return props.signUp(email, passwd)
     } else {
       setFormErr('As senhas não conferem.')
@@ -32,12 +41,21 @@ const Login = props => {
   }
   const loginSubmit = () => {
     setSending(true)
-    props.clearErr()
+    clearMsgs()
     return props.login(email, passwd)
+  }
+  const handleSignUp = () => {
+    setSending(false)
+    clearFields()
+    clearMsgs()
+    setLogin(!login)
   }
   return (
     <div className='login-container'>
       <div className='login-box'>
+        <div className='login-logo-container'>
+          <FaShoppingBag id='login-logo'/>
+        </div>
         <h4>GroceryList</h4>
         { props.error && <Alert color="warning">{props.error}</Alert> }
         { formErr && <Alert color="warning">{formErr}</Alert> }
@@ -118,18 +136,18 @@ const Login = props => {
         {
           login ?
             <p>
-              Ainda não possui uma conta, 
+              Ainda não possui uma conta? 
               <button 
-                onClick={() => setLogin(false)}
+                onClick={handleSignUp}
                 className='btn-signup'
                 >
-                clique aqui!
+                Clique aqui!
               </button>
             </p>
           :
             <p style={{textAlign: 'right'}}> 
               <button 
-                onClick={() => setLogin(true)}
+                onClick={handleSignUp}
                 className='btn-signup'
                 >
                 Cancelar cadastro.
