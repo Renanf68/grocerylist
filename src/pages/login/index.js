@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom';
 import {
   Button,
   Form,
   FormGroup,
   Label,
   Input,
-  Alert
+  Alert,
+  Spinner
 } from "reactstrap";
 
 import './styles.css'
@@ -17,8 +17,11 @@ const Login = props => {
   const [passwd, setPasswd] = useState('')
   const [passwd2, setPasswd2] = useState('')
   const [formErr, setFormErr] = useState(null)
-  const signupSubmit = () => {
+  const [sending, setSending] = useState(false)
+  const signUpSubmit = () => {
     if(passwd === passwd2) {
+      setSending(true)
+      props.clearErr()
       setFormErr(null)
       return props.signUp(email, passwd)
     } else {
@@ -28,10 +31,9 @@ const Login = props => {
     }
   }
   const loginSubmit = () => {
+    setSending(true)
+    props.clearErr()
     return props.login(email, passwd)
-  }
-  if(props.isLogged) {
-    return <Redirect to='/main' />
   }
   return (
     <div className='login-container'>
@@ -66,7 +68,9 @@ const Login = props => {
               color="success"
               className='login-form-btn' 
               onClick={loginSubmit}>
-              Entrar
+              Entrar {
+                sending && !props.error && !formErr ? <Spinner color="light" size="sm"/> : null
+              }
             </Button>
           </Form>
           :
@@ -104,8 +108,10 @@ const Login = props => {
             <Button 
               color="success"
               className='login-form-btn' 
-              onClick={signupSubmit}>
-              Cadastrar
+              onClick={signUpSubmit}>
+              Cadastrar {
+                sending && !props.error && !formErr ? <Spinner color="light" size="sm"/> : null
+              }
             </Button>
           </Form>
         }

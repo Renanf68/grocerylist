@@ -7,13 +7,30 @@
 #logo {
   width: 50px;
   height: 50px;
-  border: 1px solid grey;
+  border-color: #df4723;
   border-radius: 25px;
+  background: none;
+}
+#logo:hover {
+  background: antiquewhite;
+}
+#logo:focus {
+  outline: none;
+}
+#logo svg {
+  width: 1.4em;
+  height: 1.4em;
+  margin-bottom: 4px;
+  color: #df4723;
 }
 #logout-btn {
   width: 50px;
   height: 50px;
   border-radius: 25px;
+  background: none;
+}
+#logout-btn:focus {
+  outline: none;
 }
 .nav-logo-container {
   display: flex;

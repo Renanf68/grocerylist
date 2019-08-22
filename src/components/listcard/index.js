@@ -6,7 +6,7 @@ import ListTable from './ListTable'
 import './styles.css'
 
 const ListCard = props => {
-  const [state, dispatch] = useReducer(listCardReducer, initialState);
+  //const [state, dispatch] = useReducer(listCardReducer, initialState);
   const dataEm = []
   const data = [
     {

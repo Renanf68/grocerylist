@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './pages/login'
-import Main from './pages/main/Main';
+import Main from './pages/main';
 import firebaseApp, { auth } from './firebaseApp'
-//import logo from './logo.svg';
+
 import './App.css';
 
 function App() {
@@ -12,8 +11,10 @@ function App() {
   const [authError, setAuthError] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
   useEffect(() => {
+    console.log('useEffect')
     auth.onAuthStateChanged((user) => {
       if(user) {
+        setAuthError(null)
         setUser(user.uid)
         setIsLogged(true)
         setIsLoading(false)
@@ -36,7 +37,6 @@ function App() {
       .signInWithEmailAndPassword(email, password)
       .catch(
         function(error) {
-          console.log(error)
           if(error.code === 'auth/wrong-password') {
             setAuthError('Senha incorreta.')
           } else if (error.code === 'auth/invalid-email') {
@@ -52,9 +52,12 @@ function App() {
   const signOut = () => {
     auth
       .signOut()
+      .then( res => {
+        setIsLogged(false)
+      })
       .catch(
         function(error) {
-          console.log(error)
+          console.log('signOut error', error)
         }
       );
   }
@@ -64,14 +67,10 @@ function App() {
         isLoading ? 
           <p>Carregando...</p>
         :
-        <Router>
-          <Switch>
-            <Route path='/' exact component={
-              () => <Login signUp={signUp} login={signIn} error={authError} isLogged={isLogged}/>
-            } />
-            <Route path='/main' component={() => <Main user={user} logout={signOut}/>} />
-          </Switch>
-        </Router>
+          isLogged ?
+            <Main user={user} logout={signOut} />
+          :
+            <Login signUp={signUp} login={signIn} error={authError} clearErr={() => setAuthError(null)}/>    
       }
     </div>
   );
