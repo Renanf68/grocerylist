@@ -6,3 +6,16 @@
   vertical-align: middle;
   padding-top: 62px;
 }
+.component-wraped {
+  min-width: 300px;
+  background-color: white;
+  border-top: 4px solid #df4723;
+  border-radius: 4px;
+  padding: 12px 15px;
+  box-shadow: 4px 4px 4px #888;
+  margin-bottom: 30px;
+}
+.btn-success-default {
+  width: 100%;
+  margin-bottom: 12px;
+}

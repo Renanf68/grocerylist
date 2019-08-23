@@ -54,7 +54,7 @@ const ListTable = props => {
                             <td 
                                 colSpan='10'
                                 className='empty-list-message'
-                            >A lista está vazia.</td>
+                            >Esta lista está vazia.</td>
                         </tr> 
                 }
                 <tr style={{fontWeight: 'bold'}}>

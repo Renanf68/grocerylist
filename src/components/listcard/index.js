@@ -35,7 +35,7 @@ const ListCard = props => {
     }
   ]
   return (
-    <div className='list-card'>
+    <div className='component-wraped'>
       <Row>
         <Col xs={6} className='list-header-title'>
           <h4>ListCard</h4>
@@ -51,21 +51,21 @@ const ListCard = props => {
       <h6>Alimentação</h6>
       <ListTable 
         isLoading={false}
-        products={data}  
+        products={dataEm}  
       />
       <h6>Higiene</h6>
       <ListTable 
         isLoading={false}
-        products={data}  
+        products={dataEm}  
       />
       <h6>Limpeza</h6>
       <ListTable 
         isLoading={false}
-        products={data}  
+        products={dataEm}  
       />
       <Row>
         <Col xs={12} className='list-card-total'>
-          <h6>Total Geral: R$ 100,00</h6>
+          <h6>Total Geral: R$ 0,00</h6>
         </Col>
       </Row>
     </div>

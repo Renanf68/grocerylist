@@ -1,20 +1,23 @@
-import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { Fragment } from 'react'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import MainHeader from './MainHeader' 
 import Home from '../home'
+import NewList from '../../components/newlist';
+import Lists from '../../components/lists';
 import ListCard from '../../components/listcard';
 
 import './styles.css'
 
 const Main = props => {
+  console.log(props)
   return (
-    <Router>
+    <Fragment>
       <MainHeader logout={props.logout} />
-      <Switch>
-        <Route path='/' exact component={() => <Home />}/>} />
-        <Route path='/list/:id' component={ListCard}/>} />
-      </Switch>
-    </Router>
+      <Route path='/app' exact component={Home} />
+      <Route path='/app/new-list' component={NewList} />
+      <Route path='/app/lists' component={Lists} />
+      <Route path='/app/open-list/:id' component={ListCard} />
+    </Fragment>
   )
 }
 

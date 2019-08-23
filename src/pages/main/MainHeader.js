@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Row } from 'reactstrap'
 import { MdExitToApp } from 'react-icons/md'
 import { FaShoppingBag } from 'react-icons/fa' 
+import './styles.css'
 
 const MainHeader = props => {
   return (

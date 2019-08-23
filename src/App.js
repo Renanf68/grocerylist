@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Login from './pages/login'
-import Main from './pages/main';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import firebaseApp, { auth } from './firebaseApp'
+import Login from './pages/login'
+import MainHeader from './pages/main/MainHeader' 
+import Home from './pages/home'
+import NewList from './components/newlist';
+import Lists from './components/lists';
+import ListCard from './components/listcard';
 
 import './App.css';
+import { tsPropertySignature } from '@babel/types';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -65,17 +71,31 @@ function App() {
         }
       );
   }
+  if(isLoading) {
+    return (
+    <div className="App">
+      <p>Carregando...</p>
+    </div>
+    )
+  }
   return (
     <div className="App">
       {
-        isLoading ? 
-          <p>Carregando...</p>
-        :
-          isLogged ?
-            <Main user={user} logout={signOut} />
-          :
-            <Login signUp={signUp} login={signIn} error={authError} clearErr={() => setAuthError(null)}/>    
+        isLogged ? <Redirect to='/app' /> : <Redirect to='/login' />
       }
+      <Route path='/login' exact render={() => 
+        <Login 
+            signUp={signUp} login={signIn} error={authError} 
+            clearErr={() => setAuthError(null)}
+          />
+      }/>
+      <MainHeader logout={signOut} />
+      <Switch>
+        <Route path='/app' exact component={Home} />
+        <Route path='/app/new-list' component={NewList} />
+        <Route path='/app/lists' component={Lists} />
+        <Route path='/app/open-list/:id' component={ListCard} />
+      </Switch>
     </div>
   );
 }

@@ -52,7 +52,7 @@ const Login = props => {
   }
   return (
     <div className='login-container'>
-      <div className='login-box'>
+      <div className='component-wraped'>
         <div className='login-logo-container'>
           <FaShoppingBag id='login-logo'/>
         </div>
@@ -84,7 +84,7 @@ const Login = props => {
             </FormGroup>
             <Button 
               color="success"
-              className='login-form-btn' 
+              className='btn-success-default' 
               onClick={loginSubmit}>
               Entrar {
                 sending && !props.error && !formErr ? <Spinner color="light" size="sm"/> : null
@@ -125,7 +125,7 @@ const Login = props => {
             </FormGroup>
             <Button 
               color="success"
-              className='login-form-btn' 
+              className='btn-success-default' 
               onClick={signUpSubmit}>
               Cadastrar {
                 sending && !props.error && !formErr ? <Spinner color="light" size="sm"/> : null
