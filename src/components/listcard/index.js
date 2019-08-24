@@ -1,16 +1,37 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useState, useReducer } from 'react'
 import { Col, Row } from 'reactstrap'
 import { MdPlaylistAdd } from 'react-icons/md'
+import { database } from '../../firebaseApp'
+import { listCardReducer, initialState } from './listCardReducer';
 import ListTable from './ListTable'
+import NewItemForm from './NewItemForm'
 
 import './styles.css'
 
-const ListCard = props => {
-  //const [state, dispatch] = useReducer(listCardReducer, initialState);
-  const dataEm = []
+const ListCard = ({ match }) => {
+  const [state, dispatch] = useReducer(listCardReducer, initialState);
+  // uma abordagem melhor seria criar um contexto colocando o databaseRef já com
+  // o usuário setado? E como setaria o listId? 
+  const user = localStorage.getItem('user')
+  const listId = match.params.id
+  const databaseRef = database.ref(`${user}/lists/${listId}`)
+  //const databaseRefItems = database.ref(`${user}/lists/${listId}/items`)
+
+  function LoadList() {
+    const list = databaseRef.on('value', 
+      function(snapshot) {
+        const list = snapshot.val()
+        dispatch({'type': 'GET_LIST', payload: list })
+      })
+  }
+  useEffect(() => {
+    dispatch({'type': 'SET_LIST_ID', payload: listId })
+    LoadList()
+  }, [])
   const data = [
     {
       product: 'Feijão Macassa',
+      category: 'food',
       qtd: 2,
       puni: {
         num: 4.50,
@@ -23,6 +44,33 @@ const ListCard = props => {
     },
     {
       product: 'Arroz Parbolizado',
+      category: 'food',
+      qtd: 3,
+      puni: {
+        num: 2.50,
+        str: 'R$ 2,50' 
+      },
+      ptotal: {
+        num: 7.5,
+        str: 'R$ 7,50' 
+      }
+    },
+    {
+      product: 'Detergente',
+      category: 'cleaning',
+      qtd: 3,
+      puni: {
+        num: 2.50,
+        str: 'R$ 2,50' 
+      },
+      ptotal: {
+        num: 7.5,
+        str: 'R$ 7,50' 
+      }
+    },
+    {
+      product: 'Papel Higiênico',
+      category: 'hygiene',
       qtd: 3,
       puni: {
         num: 2.50,
@@ -34,14 +82,33 @@ const ListCard = props => {
       }
     }
   ]
+  
+  function handleNewItemForm() {
+    dispatch({'type': 'HANDLE_NEWITEMFORM'})
+  }
+  function saveNewItemObj(newItem) {
+    console.log(newItem)
+    const { id, obj } = newItem
+    databaseRef.child(`items/${id}`)
+      .set(obj)
+      .then(
+        () => {
+          dispatch({'type': 'SAVE_ITEM_SUCCESS'})
+          return setTimeout(() => dispatch({'type': 'CLEAR_MSG'}), 2000)
+        },
+        (err) => console.log(err)  
+      )
+  }
+  
   return (
     <div className='component-wraped'>
       <Row>
         <Col xs={6} className='list-header-title'>
-          <h4>ListCard</h4>
+          <h4>{state.listAlias}</h4>
         </Col>
         <Col xs={6} className='list-header-btn'>
           <button
+            onClick={handleNewItemForm}
             title='Adicionar item' 
             className='btn btn-success'>
             Add Item <MdPlaylistAdd />
@@ -51,23 +118,29 @@ const ListCard = props => {
       <h6>Alimentação</h6>
       <ListTable 
         isLoading={false}
-        products={dataEm}  
+        products={state.food}  
       />
       <h6>Higiene</h6>
       <ListTable 
         isLoading={false}
-        products={dataEm}  
+        products={state.hygiene}  
       />
       <h6>Limpeza</h6>
       <ListTable 
         isLoading={false}
-        products={dataEm}  
+        products={state.cleaning}  
       />
       <Row>
         <Col xs={12} className='list-card-total'>
-          <h6>Total Geral: R$ 0,00</h6>
+          <h6>Total Geral: {state.totalToDisplay}</h6>
         </Col>
       </Row>
+      <NewItemForm 
+        show={state.showNewItemForm}
+        toggle={handleNewItemForm} 
+        saveNewItemObj={saveNewItemObj}
+        msg={state.msg} 
+      />
     </div>
   )
 }

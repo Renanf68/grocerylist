@@ -3,7 +3,7 @@ import React from 'react'
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'
 
 const ListTableItem = props => {
-    const { id, product, qtd, puni, ptotal } = props.item
+    const { id, product, qtd, punit, ptotal } = props.item
     return (
         <tr key={id}>
             <td>
@@ -15,7 +15,7 @@ const ListTableItem = props => {
               </button>
             </td>
             <td>{qtd}</td>
-            <td>{puni.str}</td>
+            <td>{punit.str}</td>
             <td>{ptotal.str}</td>
             <td>
               <button 

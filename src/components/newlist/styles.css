@@ -1,15 +1,19 @@
-.home-container {
+.new-list-form-box {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
-.home-container a {
-  width: 100%;
-  margin: 6px;
+.new-list-form-back {
+  display: flex;
+  justify-content: flex-end;
 }
-#home-new-list {
-  height: 1.4em;
-  width: 1.4em;
+.new-list-form-back a {
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+.new-list-form-back a:hover {
+  text-decoration: none;
+}
+.new-list-form-back a svg {
+  height: 1.2em;
+  width: 1.3em;
 }

@@ -48,3 +48,15 @@
   justify-content: flex-end;
   font-weight: bold;
 }
+.modal-dialog {
+  margin-top: 100px !important;
+}
+.modal-content {
+  border: none !important;
+}
+.new-item-form-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}

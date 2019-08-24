@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import firebaseApp, { auth } from './firebaseApp'
+import { auth } from './firebaseApp'
+import { handleAuthError } from './utils'
 import Login from './pages/login'
-import MainHeader from './pages/main/MainHeader' 
+import MainHeader from './components/mainheader' 
 import Home from './pages/home'
 import NewList from './components/newlist';
 import Lists from './components/lists';
 import ListCard from './components/listcard';
 
 import './App.css';
-import { tsPropertySignature } from '@babel/types';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -17,11 +17,10 @@ function App() {
   const [authError, setAuthError] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
   useEffect(() => {
-    console.log('useEffect')
     auth.onAuthStateChanged((user) => {
       if(user) {
+        localStorage.setItem('user', `${user.uid}`)
         setAuthError(null)
-        setUser(user.uid)
         setIsLogged(true)
         setIsLoading(false)
       } else {
@@ -29,35 +28,24 @@ function App() {
       }
     })
   }, [])
+  useEffect(() => {
+    // get user lists
+  }, [user])
   const signUp = (email, password) => {
     auth
       .createUserWithEmailAndPassword(email, password)
-      .catch(
-        function(error) {
-          if (error.code === 'auth/invalid-email') {
-            setAuthError('Formato de email inválido.')
-          } else {
-            setAuthError('Erro não identificado.')
-          }
-        }
-      );
+      .catch( (error) => {
+        const err = handleAuthError(error.code)
+        setAuthError(err)
+      });
   }
   const signIn = (email, password) => {
     auth
       .signInWithEmailAndPassword(email, password)
-      .catch(
-        function(error) {
-          if(error.code === 'auth/wrong-password') {
-            setAuthError('Senha incorreta.')
-          } else if (error.code === 'auth/invalid-email') {
-            setAuthError('Formato de email inválido.')
-          } else if (error.code === 'auth/user-not-found') {
-            setAuthError('Usuário não encontrado.')
-          } else {
-            setAuthError('Erro não identificado.')
-          }
-        }
-      );
+      .catch( (error) => {
+        const err = handleAuthError(error.code)
+        setAuthError(err)
+      });
   }
   const signOut = () => {
     auth
@@ -81,7 +69,7 @@ function App() {
   return (
     <div className="App">
       {
-        isLogged ? <Redirect to='/app' /> : <Redirect to='/login' />
+        //isLogged ? <Redirect to='/app' /> : <Redirect to='/login' />
       }
       <Route path='/login' exact render={() => 
         <Login 
@@ -92,8 +80,8 @@ function App() {
       <MainHeader logout={signOut} />
       <Switch>
         <Route path='/app' exact component={Home} />
-        <Route path='/app/new-list' component={NewList} />
         <Route path='/app/lists' component={Lists} />
+        <Route path='/app/new-list' component={NewList} />
         <Route path='/app/open-list/:id' component={ListCard} />
       </Switch>
     </div>

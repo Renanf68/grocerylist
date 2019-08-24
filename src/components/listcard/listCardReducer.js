@@ -1,18 +1,78 @@
+import toArray from 'lodash.toarray'
+import { convertMathToBRL } from '../../utils'
+
 export const initialState = {
-  isLoading: false,
+  isLoading: true,
+  showNewItemForm: false,
+  msg: {
+    status: false,
+    type: '',
+    message: ''
+  },
   isEdit: {
     is: false,
-    id: '',
+    itemId: '',
     obj: {}
   },
+  listId: '',
+  listAlias: '',
+  listStatus: 'open',
   food: [],
   hygiene: [],
   cleaning: [],
-  total: 0
+  totalToDisplay: 0
 }
 
 export const listCardReducer =  (state, action) => {
   switch (action.type) {
+    case 'SET_LIST_ID':
+      return {
+        ...state,
+        listId: action.payload
+      }
+    case 'GET_LIST':
+      const listAlias = action.payload.alias
+      const listStatus = action.payload.status
+      const listItems = action.payload.items ? toArray(action.payload.items) : [] 
+      console.log(listItems)
+      const total = listItems.map( prod => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0)
+      const totalToDisplay = convertMathToBRL(total)
+      const food = listItems.filter(prod => prod.category === 'food')
+      const hygiene = listItems.filter(prod => prod.category === 'hygiene')
+      const cleaning = listItems.filter(prod => prod.category === 'cleaning')
+      return {
+        ...state,
+        isLoading: false,
+        listAlias,
+        listStatus,
+        food,
+        hygiene,
+        cleaning,
+        totalToDisplay
+      }
+    case 'HANDLE_NEWITEMFORM':
+      return {
+        ...state,
+        showNewItemForm: !state.showNewItemForm
+      }
+    case 'CLEAR_MSG':
+        return {
+          ...state,
+          msg: {
+            status: false,
+            type: '',
+            message: ''
+          }
+        }
+    case 'SAVE_ITEM_SUCCESS':
+      return {
+        ...state,
+        msg: {
+          status: true,
+          type: 'success',
+          message: 'Item salvo!'
+        }
+      }
     case 'TO_EDIT':
         const { id, category, product, qtd, puni } = action.payload
       return {

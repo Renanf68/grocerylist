@@ -8,27 +8,26 @@ import {
   Alert
 } from "reactstrap";
 import { MdPlaylistAdd as MdNewList } from 'react-icons/md'
-import { Redirect } from 'react-router-dom' 
+import { creatId } from '../../utils' 
 
 
 const NewListForm = props => {
   const [alias, setAlias] = useState('')
-  function ListObj() {
-    const listObj = {
-      alias,
-      status: 'open',
-      date: '',
-      market: '',
-      total: 0,
-      data: []
+  function createNewList() {
+    const listId = creatId()
+    const newList = {
+      id: listId,
+      obj: {
+        id: listId,
+        alias,
+        status: 'open'
+      }
     }
-    return listObj
+    return newList
   }
-  function saveList() {
-    const list = ListObj()
-    // salvar list e obter o id
-    console.log(list)
-    return props.historyPush('id')
+  function sendList() {
+    const list = createNewList()
+    return props.getList(list)
   }
   return (
     <Form>
@@ -43,7 +42,7 @@ const NewListForm = props => {
         />
       </FormGroup>
       <Button 
-        className='btn-success-default' color="success" onClick={saveList}>
+        className='btn-success-default' color="success" onClick={sendList}>
         Salvar <MdNewList />
       </Button>
     </Form>

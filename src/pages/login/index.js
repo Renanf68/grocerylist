@@ -9,6 +9,7 @@ import {
   Spinner
 } from "reactstrap";
 import { FaShoppingBag } from 'react-icons/fa' 
+import { handleSignUpError } from '../../utils'
 
 import './styles.css'
 
@@ -29,15 +30,17 @@ const Login = props => {
     setPasswd2('')
   }
   const signUpSubmit = () => {
-    if(passwd === passwd2) {
+    const { status, msg } = handleSignUpError(email, passwd, passwd2)
+    if(status) {
       setSending(true)
       clearMsgs()
       return props.signUp(email, passwd)
     } else {
-      setFormErr('As senhas não conferem.')
+      clearMsgs()
+      setFormErr(msg)
       setPasswd('')
       setPasswd2('')
-    }
+    }  
   }
   const loginSubmit = () => {
     setSending(true)
