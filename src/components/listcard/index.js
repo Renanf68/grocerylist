@@ -11,11 +11,10 @@ import './styles.css'
 const ListCard = ({ match }) => {
   const [state, dispatch] = useReducer(listCardReducer, initialState);
   // uma abordagem melhor seria criar um contexto colocando o databaseRef já com
-  // o usuário setado? E como setaria o listId? 
+  // o usuário setado? E como setaria o listId? R= .child(`/lists/${listId}`)
   const user = localStorage.getItem('user')
   const listId = match.params.id
   const databaseRef = database.ref(`${user}/lists/${listId}`)
-  //const databaseRefItems = database.ref(`${user}/lists/${listId}/items`)
 
   function LoadList() {
     const list = databaseRef.on('value', 
@@ -83,11 +82,14 @@ const ListCard = ({ match }) => {
     }
   ]
   
-  function handleNewItemForm() {
-    dispatch({'type': 'HANDLE_NEWITEMFORM'})
+  function handleNewItemForm(type) {
+    if(type === 'exit-edit') {
+      dispatch({'type': 'EXIT_EDIT'})
+    } else {
+      dispatch({'type': 'HANDLE_NEWITEMFORM'})
+    }
   }
   function saveNewItemObj(newItem) {
-    console.log(newItem)
     const { id, obj } = newItem
     databaseRef.child(`items/${id}`)
       .set(obj)
@@ -99,7 +101,22 @@ const ListCard = ({ match }) => {
         (err) => console.log(err)  
       )
   }
-  
+  function editingItemObj(editingItem) {
+    dispatch({ 'type': 'EDITING_ITEM', payload: editingItem})
+  }
+  function updateItemObj(newItem) {
+    const { id, obj } = newItem
+    databaseRef.child(`items/${id}`)
+      .set(obj)
+      .then(
+        () => {
+          dispatch({'type': 'SAVE_ITEM_SUCCESS'})
+          return setTimeout(() => dispatch({'type': 'CLEAR_MSG'}), 2000)
+        },
+        (err) => console.log(err)  
+      )
+  }
+    
   return (
     <div className='component-wraped'>
       <Row>
@@ -118,17 +135,20 @@ const ListCard = ({ match }) => {
       <h6>Alimentação</h6>
       <ListTable 
         isLoading={false}
-        products={state.food}  
+        products={state.food}
+        editing={editingItemObj}  
       />
       <h6>Higiene</h6>
       <ListTable 
         isLoading={false}
-        products={state.hygiene}  
+        products={state.hygiene}
+        editing={editingItemObj}   
       />
       <h6>Limpeza</h6>
       <ListTable 
         isLoading={false}
-        products={state.cleaning}  
+        products={state.cleaning}
+        editing={editingItemObj}   
       />
       <Row>
         <Col xs={12} className='list-card-total'>
@@ -137,7 +157,9 @@ const ListCard = ({ match }) => {
       </Row>
       <NewItemForm 
         show={state.showNewItemForm}
-        toggle={handleNewItemForm} 
+        toggle={handleNewItemForm}
+        isEditing={state.isEdit}
+        updateItemObj={updateItemObj} 
         saveNewItemObj={saveNewItemObj}
         msg={state.msg} 
       />

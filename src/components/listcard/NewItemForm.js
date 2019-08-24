@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Button,
   Form,
@@ -13,28 +13,54 @@ import CurrencyInput from '../currencyinput'
 
 
 const NewItemForm = props => {
+  const [itemId, setItemId] = useState(null)
   const [product, setProduct] =  useState('')
   const [category, setCategory] =  useState('food')
   const [qtd, setQtd] =  useState(0)
   const [price, setPrice] =  useState(0)
+
+  useEffect(() => {
+    if(props.isEditing.status) {
+      const { id, obj } = props.isEditing
+      const { product, category, qtd, punit } = obj
+      setItemId(id)
+      setProduct(product)
+      setCategory(category)
+      setQtd(qtd)
+      setPrice(punit.edit)
+    }
+  }, [props])
   function clearFields() {
+    setItemId(null)
     setProduct('')
     setCategory('food')
     setQtd(0)
     setPrice(0)
   }
-  function sendNewItem() {
-    const newItem = getNewItemObj(product, category, qtd, price)
-    props.saveNewItemObj(newItem)
+  function handleToggle() {
     clearFields()
-    // receber feedback e informar se foi salvo 
+    if(itemId) {
+      props.toggle('exit-edit')
+    } else {
+      props.toggle('exit')
+    }
+  }
+  function sendNewItem() {
+    const newItem = getNewItemObj(itemId, product, category, qtd, price)
+    if(props.isEditing.status) {
+      props.updateItemObj(newItem)
+      handleToggle()
+    } else {
+      props.saveNewItemObj(newItem)
+      clearFields()
+    }
   }
   
   return (
-    <Modal isOpen={props.show} toggle={props.toggle} className="component-wraped">
+    <Modal isOpen={props.show} toggle={handleToggle} className="component-wraped">
       <div className="new-item-form-header">
         <h4>Novo item</h4>
-        <Button close onClick={props.toggle} />
+        <Button close onClick={handleToggle} />
       </div>
       <Form>
         <FormGroup>

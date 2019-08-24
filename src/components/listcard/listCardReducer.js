@@ -10,8 +10,8 @@ export const initialState = {
     message: ''
   },
   isEdit: {
-    is: false,
-    itemId: '',
+    status: false,
+    itemId: null,
     obj: {}
   },
   listId: '',
@@ -34,7 +34,6 @@ export const listCardReducer =  (state, action) => {
       const listAlias = action.payload.alias
       const listStatus = action.payload.status
       const listItems = action.payload.items ? toArray(action.payload.items) : [] 
-      console.log(listItems)
       const total = listItems.map( prod => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0)
       const totalToDisplay = convertMathToBRL(total)
       const food = listItems.filter(prod => prod.category === 'food')
@@ -73,21 +72,32 @@ export const listCardReducer =  (state, action) => {
           message: 'Item salvo!'
         }
       }
-    case 'TO_EDIT':
-        const { id, category, product, qtd, puni } = action.payload
+    case 'EDITING_ITEM':
+        const { id, category, product, qtd, punit } = action.payload
       return {
         ...state,
+        showNewItemForm: true,
         isEdit: {
-          is: true,
+          status: true,
           id: id,
           obj: {
             category,
             product,
             qtd,
-            puni
+            punit
           }
         }
       }
+    case 'EXIT_EDIT':
+        return {
+          ...state,
+          showNewItemForm: false,
+          isEdit: {
+            status: false,
+            id: null,
+            obj: {}
+          }
+        }
     case 'LOAD_DATA':
       return initialState
     case 'CHANGE_TYPE':

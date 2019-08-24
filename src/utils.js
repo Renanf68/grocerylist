@@ -64,20 +64,26 @@ export function convertMathToBRL(math) {
   return newString;
 }
 
-export function getNewItemObj(product, category, qtd, price) {
-  const itemId = creatId()
+export function getNewItemObj(itemId, product, category, qtd, price) {
+  let objItemId
+  if(itemId) {
+    objItemId = itemId 
+  } else {
+    objItemId = creatId()
+  }
   const pUnitNum = formatToFloat(price)
   const pUnitStr = convertMathToBRL(pUnitNum)
   const pTotalNum = pUnitNum * qtd
   const pTotalStr = convertMathToBRL(pTotalNum)
   return {
-    id: itemId,
+    id: objItemId,
     obj: {
-      id: itemId,
+      id: objItemId,
       product,
       category,
       qtd,
       punit: {
+        edit: price,
         num: pUnitNum,
         str: pUnitStr
       },

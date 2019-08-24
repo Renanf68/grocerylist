@@ -3,13 +3,13 @@ import React from 'react'
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'
 
 const ListTableItem = props => {
-    const { id, product, qtd, punit, ptotal } = props.item
+    const { id, product, category, qtd, punit, ptotal } = props.item
     return (
         <tr key={id}>
             <td>
               <button 
                 className="btn btn-warning list-item-btn-edit"
-                onClick={() => props.edit(id)}
+                onClick={() => props.editing(props.item)}
               >
                 {product} <FaEdit />
               </button>
