@@ -20,6 +20,7 @@ export const initialState = {
   food: [],
   hygiene: [],
   cleaning: [],
+  others: [],
   totalToDisplay: 0
 }
 
@@ -39,6 +40,7 @@ export const listCardReducer =  (state, action) => {
       const food = listItems.filter(prod => prod.category === 'food')
       const hygiene = listItems.filter(prod => prod.category === 'hygiene')
       const cleaning = listItems.filter(prod => prod.category === 'cleaning')
+      const others = listItems.filter(prod => prod.category === 'others')
       return {
         ...state,
         isLoading: false,
@@ -47,6 +49,7 @@ export const listCardReducer =  (state, action) => {
         food,
         hygiene,
         cleaning,
+        others,
         totalToDisplay
       }
     case 'HANDLE_NEWITEMFORM':

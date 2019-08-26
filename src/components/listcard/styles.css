@@ -25,6 +25,14 @@
   padding: 2px 8px !important;
   margin: 0 3px;
 }
+.btn-list-close {
+  width: 60px;
+  margin-left: 12px;
+  padding: 0 !important;
+}
+.btn-list-close svg {
+  margin-bottom: 2px;
+}
 .list-item-btn-edit {
   padding: 2px 8px !important;
   margin: 0 3px;
@@ -47,6 +55,10 @@
   display: flex;
   justify-content: flex-end;
   font-weight: bold;
+  vertical-align: middle;
+}
+.list-card-total h6 {
+  margin: 4px 0;
 }
 .modal-dialog {
   margin-top: 100px !important;
@@ -59,4 +71,6 @@
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 12px;
+}
+.item-checked td {
 }

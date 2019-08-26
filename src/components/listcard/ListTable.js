@@ -46,6 +46,7 @@ const ListTable = props => {
                                     key={i}
                                     remove={props.remove}
                                     editing={props.editing}
+                                    itemCheck={props.itemCheck}
                                 />
                                 )
                         )

@@ -90,7 +90,8 @@ export function getNewItemObj(itemId, product, category, qtd, price) {
       ptotal: {
         num: pTotalNum,
         str: pTotalStr
-      }
+      },
+      check: false
     }
   }
 }

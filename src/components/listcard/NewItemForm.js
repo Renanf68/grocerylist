@@ -81,9 +81,13 @@ const NewItemForm = props => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="food">Alimentação</option>
-            <option value="hygiene">Higiene</option>
-            <option value="cleaning">Limpeza</option>
+            {
+              props.categories.map( 
+                cat => <option 
+                        key={cat.type} value={`${cat.type}`}>{`${cat.title}`}
+                      </option>
+              )
+            }
           </Input>
         </FormGroup>
         <FormGroup>
