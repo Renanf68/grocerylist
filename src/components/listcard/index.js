@@ -9,29 +9,22 @@ import CloseListForm from './CloseListForm'
 
 import './styles.css'
 
-const ListCard = ({ history, match, location }) => {
+const ListCard = ({ history, match }) => {
   const [state, dispatch] = useReducer(listCardReducer, initialState);
-  // uma abordagem melhor seria criar um contexto colocando o databaseRef já com
-  // o usuário setado? E como setaria o listId? R= .child(`/lists/${listId}`)
   const user = localStorage.getItem('user')
   const listId = match.params.id
   const databaseRef = database.ref(`${user}/lists/${listId}`)
-
-  function LoadList() {
+  useEffect(() => {
+    dispatch({'type': 'SET_LIST_ID', payload: listId })
+  }, [listId])
+  useEffect(() => {
     databaseRef.on('value', 
       function(snapshot) {
         const list = snapshot.val()
         dispatch({'type': 'GET_LIST', payload: list })
       })
-  }
-  useEffect(() => {
-    const items = location.state
-    if(items) {
-      dispatch({'type': 'COPY_ITEMS', payload: items })
-    }
-    dispatch({'type': 'SET_LIST_ID', payload: listId })
-    LoadList()
-  }, [])
+    return () => databaseRef.off()
+  }, [databaseRef])
   function handleNewItemForm(type) {
     if(type === 'exit-edit') {
       dispatch({'type': 'EXIT_EDIT'})

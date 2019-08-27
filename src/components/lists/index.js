@@ -18,7 +18,8 @@ const Lists = ({ history }) => {
         const ListArr = toArray(list)
         setLists(ListArr)
       })
-  }, [])
+    return () => databaseRef.off()
+  }, [databaseRef])
   function redirectTolist(listId) {
     return history.push(`/app/open-list/${listId}`)
   }

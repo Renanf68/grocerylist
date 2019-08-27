@@ -5,7 +5,6 @@ export const initialState = {
   isLoading: true,
   showNewItemForm: false,
   showCloseListForm: false,
-  itemsToCopy: {},
   msg: {
     status: false,
     type: '',
@@ -32,11 +31,6 @@ export const listCardReducer =  (state, action) => {
       return {
         ...state,
         listId: action.payload
-      }
-    case 'COPY_ITEMS':
-      return {
-        ...state,
-        itemsToCopy: action.payload
       }
     case 'GET_LIST':
       const listAlias = action.payload.alias

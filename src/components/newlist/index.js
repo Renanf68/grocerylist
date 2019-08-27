@@ -15,7 +15,7 @@ const NewList = ({ history, location }) => {
     if(items) {
       setListItems({status: true, items})
     }
-  }, [])
+  }, [location.state])
   function getItemsToCopy(listId) {
     const newItemsObj = getCopyItemsObj(listItems.items, listId)
     return newItemsObj
