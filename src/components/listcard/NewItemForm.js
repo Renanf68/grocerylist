@@ -5,10 +5,10 @@ import {
   FormGroup,
   Label,
   Input,
-  Modal,
-  Alert
+  Modal
 } from "reactstrap";
-import { getNewItemObj } from '../../utils'
+import { newItemFormValidation, getNewItemObj } from '../../utils'
+import CustonAlert from '../custonalert' 
 import CurrencyInput from '../currencyinput'
 
 
@@ -18,6 +18,7 @@ const NewItemForm = props => {
   const [category, setCategory] =  useState('food')
   const [qtd, setQtd] =  useState(0)
   const [price, setPrice] =  useState(0)
+  const [formError, setFormError] = useState({status: false, msg: ''})
 
   useEffect(() => {
     if(props.isEditing.status) {
@@ -46,6 +47,11 @@ const NewItemForm = props => {
     }
   }
   function sendNewItem() {
+    setFormError({status: false, msg: ''})
+    const validation = newItemFormValidation(product, qtd)
+    if(!validation.status) {
+      return setFormError({status:true, msg: validation.msg})
+    }
     const newItem = getNewItemObj(props.listId, itemId, product, category, qtd, price)
     if(props.isEditing.status) {
       props.updateItemObj(newItem)
@@ -63,6 +69,7 @@ const NewItemForm = props => {
         <Button close onClick={handleToggle} />
       </div>
       <Form>
+        { formError.status && <CustonAlert type='warning'>{formError.msg}</CustonAlert> }
         <FormGroup>
           <Label for="prod">Produto:</Label>
           <Input
@@ -114,7 +121,11 @@ const NewItemForm = props => {
           Salvar
         </Button>
       </Form>
-      { props.msg.status && <Alert color={`${props.msg.type}`}>{props.msg.message}</Alert> }
+      { props.msg.status && 
+          <CustonAlert type={`${props.msg.type}`}>
+            {props.msg.message}
+          </CustonAlert> 
+      }
     </Modal>
   )
 }

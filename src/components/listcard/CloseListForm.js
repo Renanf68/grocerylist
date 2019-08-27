@@ -5,13 +5,15 @@ import {
   FormGroup,
   Label,
   Input,
-  Modal,
-  Alert
+  Modal
 } from "reactstrap";
+import CustonAlert from '../custonalert'
+import { formDateValidation } from '../../utils'
 
 const CloseListForm = props => {
   const [date, setDate] = useState('')
   const [market, setMarket] =  useState('')
+  const [formError, setFormError] = useState({status: false, msg: ''})
 
   function getDate() {
     const year = new Date().getFullYear()
@@ -25,7 +27,10 @@ const CloseListForm = props => {
     setDate(newDate)
   }, [])
   function sendEndListObj() {
-
+    const validation = formDateValidation(date)
+    if(!validation.status) {
+      return setFormError({status: true, msg: validation.msg})
+    }
     const obj = {
       date,
       market,
@@ -42,6 +47,7 @@ const CloseListForm = props => {
         <Button close onClick={props.toggle} />
       </div>
       <Form>
+      { formError.status && <CustonAlert type='warning'>{formError.msg}</CustonAlert> }
         <FormGroup>
           <Label for="date">Data:</Label>
           <Input
@@ -67,7 +73,7 @@ const CloseListForm = props => {
           Salvar
         </Button>
       </Form>
-      { props.msg.status && <Alert color={`${props.msg.type}`}>{props.msg.message}</Alert> }
+      { props.msg.status && <CustonAlert type={`${props.msg.type}`}>{props.msg.message}</CustonAlert> }
     </Modal>
   )
 }

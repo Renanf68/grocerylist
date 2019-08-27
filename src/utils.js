@@ -76,6 +76,38 @@ export function convertMathToBRL(math) {
   return newString;
 }
 
+export function newItemFormValidation(product, qtd) {
+  if(product === '') {
+    if(qtd < 1) {
+      return {status: false, msg: 'Favor informar o nome do produto e a quantidade desejada.'}
+    } else {
+      return {status: false, msg: 'Favor informar o nome do produto.'}
+    } 
+  } else {
+    if(qtd < 1) {
+      return {status: false, msg: 'Favor informar a quantidade desejada.'}
+    } 
+  }
+  return {status: true, msg: ''}
+}
+
+export function formDateValidation(date) {
+  const dateArr = date.split('', 10)
+  if(dateArr.length > 0) {
+    if(dateArr[4] !== '-') {
+      return {status: false, msg: 'Favor informar uma data válida.' }
+    } else {
+      if(dateArr[0] !== '2' && dateArr[1] !== '0') {
+        return {status: false, msg: 'Favor informar uma data válida.' }
+      } else {
+        return {status: true, msg: '' }
+      }
+    }
+  } else {
+    return {status: false, msg: 'Favor informar uma data válida.' }
+  }
+}
+
 export function getNewItemObj(listId, itemId, product, category, qtd, price) {
   let objItemId
   if(itemId) {

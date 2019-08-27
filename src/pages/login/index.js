@@ -5,10 +5,10 @@ import {
   FormGroup,
   Label,
   Input,
-  Alert,
   Spinner
 } from "reactstrap";
-import { FaShoppingBag } from 'react-icons/fa' 
+import { FaShoppingBag } from 'react-icons/fa'
+import CustonAlert from '../../components/custonalert' 
 import { handleSignUpError } from '../../utils'
 
 import './styles.css'
@@ -60,8 +60,8 @@ const Login = props => {
           <FaShoppingBag id='login-logo'/>
         </div>
         <h4>GroceryList</h4>
-        { props.error && <Alert color="warning">{props.error}</Alert> }
-        { formErr && <Alert color="warning">{formErr}</Alert> }
+        { props.error && <CustonAlert type='warning'>{props.error}</CustonAlert> }
+        { formErr && <CustonAlert type='warning'>{formErr}</CustonAlert> }
         {
           login ?
           <Form>
