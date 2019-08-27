@@ -44,6 +44,7 @@ function App() {
       });
   }
   const signOut = () => {
+    localStorage.removeItem('user');
     auth
       .signOut()
       .then( res => {

@@ -107,3 +107,12 @@ export function getNewItemObj(listId, itemId, product, category, qtd, price) {
     }
   }
 }
+
+export function dateFormat(date) {
+  if (date !== '') {
+    const dateArr = date.split('-', 3)
+    return `${dateArr[2]}/${dateArr[1]}/${dateArr[0]}`
+  } else {
+    return date
+  }
+}

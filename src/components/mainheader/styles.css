@@ -1,16 +1,20 @@
-.main-navbar {
+.nav-icon {
   position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 15px;
+  top: 15px;
   z-index: 9999;
+}
+.nav-logo {
+  left: 15px;
+}
+.nav-logout {
+  right: 15px;
 }
 #nav-logo {
   width: 50px;
   height: 50px;
   border-color: #df4723;
   border-radius: 25px;
-  background: none;
+  background: #fff;
 }
 #logo:hover {
   background: antiquewhite;
@@ -28,16 +32,8 @@
   width: 50px;
   height: 50px;
   border-radius: 25px;
-  background: none;
+  background: #fff;
 }
 #logout-btn:focus {
   outline: none;
-}
-.nav-logo-container {
-  display: flex;
-  justify-content: flex-start;
-}
-.nav-logout-container {
-  display: flex;
-  justify-content: flex-end;
 }
