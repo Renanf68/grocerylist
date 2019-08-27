@@ -4,6 +4,7 @@ import { convertMathToBRL } from '../../utils'
 export const initialState = {
   isLoading: true,
   showNewItemForm: false,
+  showCloseListForm: false,
   msg: {
     status: false,
     type: '',
@@ -56,6 +57,11 @@ export const listCardReducer =  (state, action) => {
       return {
         ...state,
         showNewItemForm: !state.showNewItemForm
+      }
+    case 'HANDLE_CLOSELISTFORM':
+      return {
+        ...state,
+        showCloseListForm: !state.showCloseListForm
       }
     case 'CLEAR_MSG':
         return {

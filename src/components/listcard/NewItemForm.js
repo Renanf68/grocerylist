@@ -46,7 +46,7 @@ const NewItemForm = props => {
     }
   }
   function sendNewItem() {
-    const newItem = getNewItemObj(itemId, product, category, qtd, price)
+    const newItem = getNewItemObj(props.listId, itemId, product, category, qtd, price)
     if(props.isEditing.status) {
       props.updateItemObj(newItem)
       handleToggle()

@@ -14,7 +14,7 @@ import { creatId } from '../../utils'
 const NewListForm = props => {
   const [alias, setAlias] = useState('')
   function createNewList() {
-    const listId = creatId()
+    const listId = creatId('list')
     const newList = {
       id: listId,
       obj: {

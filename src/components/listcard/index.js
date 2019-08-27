@@ -1,11 +1,11 @@
 import React, { useEffect, useReducer, Fragment } from 'react'
 import { Col, Row } from 'reactstrap'
-import { MdPlaylistAdd } from 'react-icons/md'
-import { FaMoneyBillWave } from 'react-icons/fa'
+import { MdPlaylistAdd, MdPlaylistAddCheck } from 'react-icons/md'
 import { database } from '../../firebaseApp'
 import { listCardReducer, initialState } from './listCardReducer';
 import ListTable from './ListTable'
 import NewItemForm from './NewItemForm'
+import CloseListForm from './CloseListForm'
 
 import './styles.css'
 
@@ -137,11 +137,9 @@ const ListCard = ({ history, match }) => {
         (err) => console.log('Check err', err)
       )
   }
-  function closeList() {
+  function closeList(obj) {
     // no form vir com data preenchida e com input pro nome do mercado.
-    databaseRef.update(
-      {status: 'close', date: '26/08/2019', market: 'Atacarejo'}
-    )
+    databaseRef.update(obj)
       .then(
         history.push('/app'),
         () => console.log('Lista fechada!')
@@ -203,20 +201,29 @@ const ListCard = ({ history, match }) => {
         <Col xs={12} className='list-card-total'>
           <h6>Total Geral: {state.totalToDisplay}</h6>
           <button 
-            onClick={closeList}
+            onClick={() => dispatch({'type': 'HANDLE_CLOSELISTFORM'})}
             title='Fechar lista'
             className=' btn btn-success btn-list-close'>
-            <FaMoneyBillWave />
+            Concluir <MdPlaylistAddCheck />
           </button>
         </Col>
       </Row>
       <NewItemForm 
         show={state.showNewItemForm}
         toggle={handleNewItemForm}
+        listId={listId}
         categories={categories}
         isEditing={state.isEdit}
         updateItemObj={updateItemObj} 
         saveNewItemObj={saveNewItemObj}
+        msg={state.msg} 
+      />
+      <CloseListForm 
+        show={state.showCloseListForm}
+        toggle={() => dispatch({'type': 'HANDLE_CLOSELISTFORM'})}
+        listAlias={state.listAlias}
+        getEndObj={closeList}
+        total={state.totalToDisplay}
         msg={state.msg} 
       />
     </div>

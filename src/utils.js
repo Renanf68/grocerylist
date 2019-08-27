@@ -1,3 +1,5 @@
+import { database } from './firebaseApp'
+
 export function handleAuthError(code) {
   console.log(code)
   if(code === 'auth/wrong-password') {
@@ -30,7 +32,7 @@ export function handleSignUpError(email, passwd, passwd2) {
   }
 }
 
-export function creatId() {
+/*export function creatId() {
   const timestamp = ((new Date().getTime() / 1000) | 0).toString(16);
   const newId =
     timestamp +
@@ -40,6 +42,16 @@ export function creatId() {
       })
       .toLowerCase();
   return newId;
+}*/
+export function creatId(type, listId) {
+  const user = localStorage.getItem('user')
+  if(type === 'list'){
+    const newListId = database.ref(user).child('/lists').push().key
+    return newListId
+  } else if (type === 'item') {
+    const itemId = database.ref(`${user}/lists`).child(`/${listId}`).push().key
+    return itemId
+  }
 }
 
 export const formatToFloat = rawValue => {
@@ -64,12 +76,12 @@ export function convertMathToBRL(math) {
   return newString;
 }
 
-export function getNewItemObj(itemId, product, category, qtd, price) {
+export function getNewItemObj(listId, itemId, product, category, qtd, price) {
   let objItemId
   if(itemId) {
     objItemId = itemId 
   } else {
-    objItemId = creatId()
+    objItemId = creatId('item', listId)
   }
   const pUnitNum = formatToFloat(price)
   const pUnitStr = convertMathToBRL(pUnitNum)

@@ -26,12 +26,12 @@
   margin: 0 3px;
 }
 .btn-list-close {
-  width: 60px;
   margin-left: 12px;
-  padding: 0 !important;
+  padding: 1px 6px !important;
 }
 .btn-list-close svg {
-  margin-bottom: 2px;
+  height: 1.5em;
+  width: 1.5em;
 }
 .list-item-btn-edit {
   padding: 2px 8px !important;
