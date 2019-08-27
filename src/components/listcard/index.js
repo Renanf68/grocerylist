@@ -18,7 +18,7 @@ const ListCard = ({ history, match }) => {
   const databaseRef = database.ref(`${user}/lists/${listId}`)
 
   function LoadList() {
-    const list = databaseRef.on('value', 
+    databaseRef.on('value', 
       function(snapshot) {
         const list = snapshot.val()
         dispatch({'type': 'GET_LIST', payload: list })
@@ -28,61 +28,6 @@ const ListCard = ({ history, match }) => {
     dispatch({'type': 'SET_LIST_ID', payload: listId })
     LoadList()
   }, [])
-  const data = [
-    {
-      product: 'Feijão Macassa',
-      category: 'food',
-      qtd: 2,
-      puni: {
-        num: 4.50,
-        str: 'R$ 4,50' 
-      },
-      ptotal: {
-        num: 9,
-        str: 'R$ 9,00' 
-      }
-    },
-    {
-      product: 'Arroz Parbolizado',
-      category: 'food',
-      qtd: 3,
-      puni: {
-        num: 2.50,
-        str: 'R$ 2,50' 
-      },
-      ptotal: {
-        num: 7.5,
-        str: 'R$ 7,50' 
-      }
-    },
-    {
-      product: 'Detergente',
-      category: 'cleaning',
-      qtd: 3,
-      puni: {
-        num: 2.50,
-        str: 'R$ 2,50' 
-      },
-      ptotal: {
-        num: 7.5,
-        str: 'R$ 7,50' 
-      }
-    },
-    {
-      product: 'Papel Higiênico',
-      category: 'hygiene',
-      qtd: 3,
-      puni: {
-        num: 2.50,
-        str: 'R$ 2,50' 
-      },
-      ptotal: {
-        num: 7.5,
-        str: 'R$ 7,50' 
-      }
-    }
-  ]
-  
   function handleNewItemForm(type) {
     if(type === 'exit-edit') {
       dispatch({'type': 'EXIT_EDIT'})
@@ -130,19 +75,14 @@ const ListCard = ({ history, match }) => {
   function handleCheck(item) {
     databaseRef.child(`items/${item.id}/`)
       .update({ check: !item.check })
-      .then(
-        () => console.log('Item check/undo')
-      )
       .catch(
         (err) => console.log('Check err', err)
       )
   }
   function closeList(obj) {
-    // no form vir com data preenchida e com input pro nome do mercado.
     databaseRef.update(obj)
       .then(
         history.push('/app'),
-        () => console.log('Lista fechada!')
       )
       .catch(
         (err) => console.log('Fechamento de lista err', err)

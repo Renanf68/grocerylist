@@ -13,7 +13,6 @@ import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
-  const [user, setUser] = useState(null)
   const [authError, setAuthError] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
   useEffect(() => {
@@ -28,9 +27,6 @@ function App() {
       }
     })
   }, [])
-  useEffect(() => {
-    // get user lists
-  }, [user])
   const signUp = (email, password) => {
     auth
       .createUserWithEmailAndPassword(email, password)

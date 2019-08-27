@@ -3,7 +3,7 @@ import React from 'react'
 import { FaEdit, FaTrashAlt, FaCheck, FaUndo } from 'react-icons/fa'
 
 const ListTableItem = props => {
-    const { id, product, category, qtd, punit, ptotal, check } = props.item
+    const { id, product, qtd, punit, ptotal, check } = props.item
     return (
         <tr key={id}>
             {

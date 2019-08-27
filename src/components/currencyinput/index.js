@@ -11,8 +11,12 @@ const repeatZeroes = times => {
   return result;
 };
 const removeOccurrences = (from, toRemove) => {
-  const NewToRemove = toRemove.replace(
+  /*const NewToRemove = toRemove.replace(
     /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g,
+    "\\$&"
+  );*/
+  const NewToRemove = toRemove.replace(
+    /[-[\]/{}()*+?.\\^$|]/g,
     "\\$&"
   );
   const re = new RegExp(NewToRemove, "g");
