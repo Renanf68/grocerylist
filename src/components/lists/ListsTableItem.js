@@ -18,14 +18,14 @@ const ListsTableItem = props => {
             <td>{newStatus}</td>
             <td>
               <button 
-                onClick={() => props.viewList(id, items)}
+                onClick={() => props.viewList(id)}
                 className="btn btn-success list-item-btns"
                 title="Visualizar lista"
               >
                 <FaEye />
               </button>
               <button 
-                onClick={() => props.copyList(id, items)}
+                onClick={() => props.copyList(items)}
                 className="btn btn-info list-item-btns"
                 title="Criar cópia"
               >

@@ -9,7 +9,7 @@ import CloseListForm from './CloseListForm'
 
 import './styles.css'
 
-const ListCard = ({ history, match }) => {
+const ListCard = ({ history, match, location }) => {
   const [state, dispatch] = useReducer(listCardReducer, initialState);
   // uma abordagem melhor seria criar um contexto colocando o databaseRef já com
   // o usuário setado? E como setaria o listId? R= .child(`/lists/${listId}`)
@@ -25,6 +25,10 @@ const ListCard = ({ history, match }) => {
       })
   }
   useEffect(() => {
+    const items = location.state
+    if(items) {
+      dispatch({'type': 'COPY_ITEMS', payload: items })
+    }
     dispatch({'type': 'SET_LIST_ID', payload: listId })
     LoadList()
   }, [])
@@ -79,7 +83,24 @@ const ListCard = ({ history, match }) => {
         (err) => console.log('Check err', err)
       )
   }
+  function itemsCheckAll() {
+    let itemsArr = []
+    Array.prototype.push.apply(itemsArr, state.food)
+    Array.prototype.push.apply(itemsArr, state.hygiene)
+    Array.prototype.push.apply(itemsArr, state.cleaning)
+    Array.prototype.push.apply(itemsArr, state.others)
+    itemsArr.map( item => {
+      return (
+        databaseRef.child(`items/${item.id}/`)
+          .update({ check: true })
+          .catch(
+            (err) => console.log('CheckAll err', err)
+          )
+      )
+    })
+  }
   function closeList(obj) {
+    itemsCheckAll()
     databaseRef.update(obj)
       .then(
         history.push('/app'),

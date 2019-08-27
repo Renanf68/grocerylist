@@ -21,7 +21,11 @@ const NewListForm = props => {
       obj: {
         id: listId,
         alias,
-        status: 'open'
+        status: 'open',
+        date: '',
+        market: '',
+        items: {},
+        total: ''
       }
     }
     return newList

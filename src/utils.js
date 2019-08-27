@@ -1,3 +1,4 @@
+import toArray from 'lodash.toarray'
 import { database } from './firebaseApp'
 
 export function handleAuthError(code) {
@@ -106,6 +107,25 @@ export function formDateValidation(date) {
   } else {
     return {status: false, msg: 'Favor informar uma data válida.' }
   }
+}
+
+export function getCopyItemsObj(items, listId) {
+  const itemsArr = toArray(items)
+  let newItemsObj = {}
+  itemsArr.map( item => {
+    const itemId = creatId('item', listId)
+    const { product, category, qtd, punit, ptotal } = item
+    return newItemsObj[itemId] = {
+      id: itemId,
+      product,
+      category,
+      qtd,
+      punit,
+      ptotal,
+      check: false
+    }
+  })
+  return newItemsObj
 }
 
 export function getNewItemObj(listId, itemId, product, category, qtd, price) {
