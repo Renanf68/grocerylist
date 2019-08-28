@@ -32,7 +32,7 @@ const ListsTableItem = props => {
                 <FaRegCopy />
               </button>
               <button 
-                onClick={() => props.removeList(id)}
+                onClick={() => props.removeList(id, 'list', alias)}
                 className="btn btn-danger list-item-btns"
                 title="Excluir lista"
               >

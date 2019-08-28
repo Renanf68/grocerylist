@@ -56,6 +56,7 @@ function App() {
         }
       );
   }
+  
   if(isLoading) {
     return (
     <div className="App">
@@ -66,7 +67,7 @@ function App() {
   return (
     <div className="App">
       {
-        //isLogged ? <Redirect to='/app' /> : <Redirect to='/login' />
+        isLogged ? <Redirect to='/app' /> : <Redirect to='/login' />
       }
       <Route path='/login' exact render={() => 
         <Login 

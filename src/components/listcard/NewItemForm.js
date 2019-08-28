@@ -30,7 +30,7 @@ const NewItemForm = props => {
       setQtd(qtd)
       setPrice(punit.edit)
     }
-  }, [props])
+  }, [props.isEditing])
   function clearFields() {
     setItemId(null)
     setProduct('')
@@ -61,7 +61,6 @@ const NewItemForm = props => {
       clearFields()
     }
   }
-  
   return (
     <Modal isOpen={props.show} toggle={handleToggle} className="component-wraped">
       <div className="new-item-form-header">

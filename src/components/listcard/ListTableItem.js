@@ -26,7 +26,7 @@ const ListTableItem = props => {
               {
                 !check && (
                   <button 
-                    onClick={() => props.remove(id)}
+                    onClick={() => props.remove(id, product)}
                     className="btn btn-danger list-item-btns"
                     title="Excluir item"
                   >

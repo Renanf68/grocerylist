@@ -5,10 +5,12 @@ import toArray from 'lodash.toarray'
 
 import ListsTable from './ListsTable'
 import ListsTableItem from './ListsTableItem'
+import RemoveVerification from '../removeverification'
 
-const Lists = ({ history }) => {
+const Lists = (props) => {
   const [lists, setLists] = useState([])
   const [copyItems, setCopyItems] = useState({status: false, items: {}})
+  const [remove, setRemove] = useState({status: false, list: {}})
   const user = localStorage.getItem('user')
   const databaseRef = database.ref(`${user}/lists/`)
   useEffect(() => {
@@ -19,9 +21,9 @@ const Lists = ({ history }) => {
         setLists(ListArr)
       })
     return () => databaseRef.off()
-  }, [databaseRef])
+  }, [])
   function redirectTolist(listId) {
-    return history.push(`/app/open-list/${listId}`)
+    return props.history.push(`/app/open-list/${listId}`)
   }
   function copyToNewList(items) {
     return setCopyItems({status: true, items})
@@ -30,11 +32,14 @@ const Lists = ({ history }) => {
     databaseRef.child(`${listId}`)
       .remove()
       .then(
-        () => console.log('Item removido')
+        () => setRemove({status: false, list: {}})
       )
       .catch(
         (err) => console.log('Remove err', err)
       )
+  }
+  function removeConfirm(listId, type, alias) {
+    setRemove({status: true, list: {listId, type, alias}})
   }
   if(copyItems.status) {
     const items = copyItems.items
@@ -51,11 +56,20 @@ const Lists = ({ history }) => {
             list={list}
             viewList={redirectTolist}
             copyList={copyToNewList}
-            removeList={listRemove} 
+            removeList={removeConfirm} 
           />   
         ))
       }
       </ListsTable>
+      <RemoveVerification 
+        show={remove.status}
+        toggle={() => setRemove({status: false, list: {}})}
+        id={remove.list.listId}
+        type={remove.list.type}
+        name={remove.list.alias}
+        cancel={() => setRemove({status: false, list: {}})}
+        remove={listRemove}
+      /> 
     </div>
   )
 }

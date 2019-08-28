@@ -6,6 +6,7 @@ import { listCardReducer, initialState } from './listCardReducer';
 import ListTable from './ListTable'
 import NewItemForm from './NewItemForm'
 import CloseListForm from './CloseListForm'
+import RemoveVerification from '../removeverification'
 
 import './styles.css'
 
@@ -24,12 +25,12 @@ const ListCard = ({ history, match }) => {
         dispatch({'type': 'GET_LIST', payload: list })
       })
     return () => databaseRef.off()
-  }, [databaseRef])
+  }, [])
   function handleNewItemForm(type) {
     if(type === 'exit-edit') {
-      dispatch({'type': 'EXIT_EDIT'})
+      return dispatch({'type': 'EXIT_EDIT'})
     } else {
-      dispatch({'type': 'HANDLE_NEWITEMFORM'})
+      return dispatch({'type': 'HANDLE_NEWITEMFORM'})
     }
   }
   function saveNewItemObj(newItem) {
@@ -45,7 +46,7 @@ const ListCard = ({ history, match }) => {
       )
   }
   function editingItemObj(editingItem) {
-    dispatch({ 'type': 'EDITING_ITEM', payload: editingItem})
+    return dispatch({ 'type': 'EDITING_ITEM', payload: editingItem})
   }
   function updateItemObj(newItem) {
     const { id, obj } = newItem
@@ -63,11 +64,14 @@ const ListCard = ({ history, match }) => {
     databaseRef.child(`items/${itemId}`)
       .remove()
       .then(
-        () => console.log('Item removido')
+        () => dispatch({'type': 'EXIT_REMOVING'})
       )
       .catch(
         (err) => console.log('Remove err', err)
       )
+  }
+  function removeItemConfirm(itemId, product) {
+    dispatch({'type': 'IS_REMOVING', payload: {itemId, product}})
   }
   function handleCheck(item) {
     databaseRef.child(`items/${item.id}/`)
@@ -108,6 +112,7 @@ const ListCard = ({ history, match }) => {
     { title: 'Limpeza', type: 'cleaning'},
     { title: 'Outros', type: 'others'}
   ]
+  console.log('ANTES')
   return (
     <div className='component-wraped'>
       <Row>
@@ -143,7 +148,7 @@ const ListCard = ({ history, match }) => {
                 isLoading={false}
                 products={list}
                 editing={editingItemObj}
-                remove={itemRemove}
+                remove={removeItemConfirm}
                 itemCheck={handleCheck}  
               />
             </Fragment>
@@ -180,6 +185,15 @@ const ListCard = ({ history, match }) => {
         total={state.totalToDisplay}
         msg={state.msg} 
       />
+      <RemoveVerification 
+        show={state.isRemoving.status}
+        toggle={() => dispatch({'type': 'EXIT_REMOVING'})}
+        id={state.isRemoving.itemId}
+        type='item'
+        name={state.isRemoving.product}
+        cancel={() => dispatch({'type': 'EXIT_REMOVING'})}
+        remove={itemRemove}
+      /> 
     </div>
   )
 }

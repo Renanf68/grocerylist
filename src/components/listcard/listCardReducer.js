@@ -15,6 +15,11 @@ export const initialState = {
     itemId: null,
     obj: {}
   },
+  isRemoving: {
+    status: false,
+    itemId: null,
+    product: ''
+  },
   listId: '',
   listAlias: '',
   listStatus: 'open',
@@ -105,6 +110,24 @@ export const listCardReducer =  (state, action) => {
             status: false,
             id: null,
             obj: {}
+          }
+        }
+    case 'IS_REMOVING':
+      return {
+        ...state,
+        isRemoving: {
+          status: true,
+          itemId: action.payload.itemId,
+          product: action.payload.product
+        }
+      }
+    case 'EXIT_REMOVING':
+        return {
+          ...state,
+          isRemoving: {
+            status: false,
+            itemId: null,
+            product: ''
           }
         }
     case 'LOAD_DATA':
