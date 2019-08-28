@@ -8,6 +8,7 @@ import Home from './pages/home'
 import NewList from './components/newlist';
 import Lists from './components/lists';
 import ListCard from './components/listcard';
+import Routes from './Routes'
 
 import './App.css';
 
@@ -75,13 +76,7 @@ function App() {
             clearErr={() => setAuthError(null)}
           />
       }/>
-      <MainHeader logout={signOut} />
-      <Switch>
-        <Route path='/app' exact component={Home} />
-        <Route path='/app/lists' component={Lists} />
-        <Route path='/app/new-list' component={NewList} />
-        <Route path='/app/open-list/:id' component={ListCard} />
-      </Switch>
+      { isLogged && <Routes signOut={signOut}/> }
     </div>
   );
 }
