@@ -112,12 +112,11 @@ const ListCard = ({ history, match }) => {
     { title: 'Limpeza', type: 'cleaning'},
     { title: 'Outros', type: 'others'}
   ]
-  console.log('ANTES')
   return (
     <div className='component-wraped'>
       <Row>
         <Col xs={6} className='list-header-title'>
-          <h4>{state.listAlias}</h4>
+          <h4>{state.isLoading ? 'Carregando...' : state.listAlias}</h4>
         </Col>
         <Col xs={6} className='list-header-btn'>
           <button
@@ -129,6 +128,7 @@ const ListCard = ({ history, match }) => {
         </Col>
       </Row>
       {
+        !state.isLoading &&
         categories.map( cat => {
           const type = cat.type
           let list

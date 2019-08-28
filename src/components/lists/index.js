@@ -8,6 +8,7 @@ import ListsTableItem from './ListsTableItem'
 import RemoveVerification from '../removeverification'
 
 const Lists = (props) => {
+  const [isLoading, setIsLoading] = useState(true)
   const [lists, setLists] = useState([])
   const [copyItems, setCopyItems] = useState({status: false, items: {}})
   const [remove, setRemove] = useState({status: false, list: {}})
@@ -19,6 +20,7 @@ const Lists = (props) => {
         const list = snapshot.val()
         const ListArr = toArray(list)
         setLists(ListArr)
+        setIsLoading(false)
       })
     return () => databaseRef.off()
   }, [])
@@ -48,19 +50,24 @@ const Lists = (props) => {
   return (
     <div className="component-wraped">
       <h6>Listas</h6>
-      <ListsTable>
       {
-        lists.map( list => (
-          <ListsTableItem
-            key={list.id} 
-            list={list}
-            viewList={redirectTolist}
-            copyList={copyToNewList}
-            removeList={removeConfirm} 
-          />   
-        ))
+        isLoading ? 
+        <p>Carregando...</p>
+        :
+        <ListsTable>
+        {
+          lists.map( list => (
+            <ListsTableItem
+              key={list.id} 
+              list={list}
+              viewList={redirectTolist}
+              copyList={copyToNewList}
+              removeList={removeConfirm} 
+            />   
+          ))
+        }
+        </ListsTable>
       }
-      </ListsTable>
       <RemoveVerification 
         show={remove.status}
         toggle={() => setRemove({status: false, list: {}})}

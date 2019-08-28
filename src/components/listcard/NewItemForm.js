@@ -64,7 +64,7 @@ const NewItemForm = props => {
   return (
     <Modal isOpen={props.show} toggle={handleToggle} className="component-wraped">
       <div className="new-item-form-header">
-        <h4>Novo item</h4>
+        <h4>{props.isEditing.status ? 'Editar item' : 'Novo item'}</h4>
         <Button close onClick={handleToggle} />
       </div>
       <Form>
