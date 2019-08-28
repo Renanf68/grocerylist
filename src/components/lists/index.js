@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { database } from '../../firebaseApp'
-import { FaEye, FaTrashAlt, FaRegCopy } from 'react-icons/fa'
+import { FaEye, FaRegCopy } from 'react-icons/fa'
 import toArray from 'lodash.toarray'
 
 import ListsTable from './ListsTable'
@@ -16,12 +16,13 @@ const Lists = (props) => {
   const [copyItems, setCopyItems] = useState({status: false, items: {}})
   const [remove, setRemove] = useState({status: false, list: {}})
   const user = localStorage.getItem('user')
+  const databaseReftoLoad = database.ref(`${user}/lists/`).limitToLast(12)
   const databaseRef = database.ref(`${user}/lists/`)
   useEffect(() => {
-    databaseRef.on('value', 
+    databaseReftoLoad.on('value', 
       function(snapshot) {
         const list = snapshot.val()
-        const ListArr = toArray(list)
+        const ListArr = toArray(list).reverse()
         setLists(ListArr)
         setIsLoading(false)
       })
@@ -56,6 +57,7 @@ const Lists = (props) => {
       <div className="lists-legend-container">
         <p className='lists-legend'><FaEye /> Visualizar lista.</p>
         <p className='lists-legend'><FaRegCopy /> Copiar items para uma nova lista.</p>
+        <p className='lists-legend'>* Será possível visualizar suas 12 ultimas listas.</p>
       </div>
       {
         isLoading ? 

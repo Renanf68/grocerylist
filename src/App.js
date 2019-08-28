@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { auth } from './firebaseApp'
 import { handleAuthError } from './utils'
 import Login from './pages/login'
-import MainHeader from './components/mainheader' 
-import Home from './pages/home'
-import NewList from './components/newlist';
-import Lists from './components/lists';
-import ListCard from './components/listcard';
 import Routes from './Routes'
 
 import './App.css';

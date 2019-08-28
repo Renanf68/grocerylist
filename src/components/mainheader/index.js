@@ -8,7 +8,7 @@ const MainHeader = props => {
   return (
     <Fragment>
       <div className='nav-icon nav-logo'>
-        <button id='nav-logo' title='Menu'>
+        <button id='nav-logo' title='Página inicial'>
           <Link to='/app'><FaShoppingBag /></Link>
         </button>
       </div>

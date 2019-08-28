@@ -115,10 +115,10 @@ const ListCard = ({ history, match }) => {
   return (
     <div className='component-wraped'>
       <Row>
-        <Col xs={6} className='list-header-title'>
+        <Col xs={8} className='list-header-title'>
           <h4>{state.isLoading ? 'Carregando...' : state.listAlias}</h4>
         </Col>
-        <Col xs={6} className='list-header-btn'>
+        <Col xs={4} className='list-header-btn'>
           <button
             onClick={handleNewItemForm}
             title='Adicionar item' 
