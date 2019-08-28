@@ -16,6 +16,7 @@ const NewList = ({ history, location }) => {
       setListItems({status: true, items})
     }
   }, [location.state])
+  
   function getItemsToCopy(listId) {
     const newItemsObj = getCopyItemsObj(listItems.items, listId)
     return newItemsObj
@@ -42,7 +43,7 @@ const NewList = ({ history, location }) => {
   return (
     <div className='new-list-form-box'>
       <div className='new-list-form-back'>
-        <Link to='/app'>Voltar <Back /></Link>
+        <Link to={listItems.status ? '/app/lists' : '/app'}>Voltar <Back /></Link>
       </div>
       <div className='component-wraped'>
         <h4>Nova lista</h4>

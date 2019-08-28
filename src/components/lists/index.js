@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { database } from '../../firebaseApp'
+import { FaEye, FaTrashAlt, FaRegCopy } from 'react-icons/fa'
 import toArray from 'lodash.toarray'
 
 import ListsTable from './ListsTable'
 import ListsTableItem from './ListsTableItem'
 import RemoveVerification from '../removeverification'
+
+import './styles.css'
 
 const Lists = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -50,21 +53,33 @@ const Lists = (props) => {
   return (
     <div className="component-wraped">
       <h6>Listas</h6>
+      <div className="lists-legend-container">
+        <p className='lists-legend'><FaEye /> Visualizar lista.</p>
+        <p className='lists-legend'><FaRegCopy /> Copiar items para uma nova lista.</p>
+      </div>
       {
         isLoading ? 
         <p>Carregando...</p>
         :
         <ListsTable>
         {
-          lists.map( list => (
-            <ListsTableItem
-              key={list.id} 
-              list={list}
-              viewList={redirectTolist}
-              copyList={copyToNewList}
-              removeList={removeConfirm} 
-            />   
-          ))
+          lists.length > 0 ?
+            lists.map( list => (
+              <ListsTableItem
+                key={list.id} 
+                list={list}
+                viewList={redirectTolist}
+                copyList={copyToNewList}
+                removeList={removeConfirm} 
+              />   
+            ))
+          :
+            <tr>
+              <td 
+                colSpan='10'
+                className='empty-list-message'
+              >Não há listas no momento.</td>
+            </tr> 
         }
         </ListsTable>
       }
