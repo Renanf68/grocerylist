@@ -37,3 +37,22 @@
 #logout-btn:focus {
   outline: none;
 }
+.nav-help {
+  position: fixed;
+  bottom: 15px;
+  z-index: 9999;
+  left: 15px;
+}
+#help {
+  width: 35px;
+  height: 35px;
+  border-color: #df4723;
+  border-radius: 25px;
+  background: #fff;
+}
+#help svg {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0 0 2px -2px;
+  color: #df4723;
+}

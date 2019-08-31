@@ -1,0 +1,20 @@
+.helps {
+  max-width: 350px;
+  margin-bottom: 60px;
+}
+.helps h6 {
+  color: #df4723;
+  margin-bottom: 12px;
+}
+
+.help {
+}
+.help .col-1 svg {
+  height: 0.8em;
+  width: 0.8em;
+  margin-bottom: 8px;
+}
+.help p {
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}

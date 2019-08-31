@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Redirect } from 'react-router-dom'
 import { database } from '../../firebaseApp'
 import { FaEye, FaRegCopy } from 'react-icons/fa'
+import { MdScreenRotation } from 'react-icons/md'
 import toArray from 'lodash.toarray'
 
 import ListsTable from './ListsTable'
@@ -15,9 +16,12 @@ const Lists = (props) => {
   const [lists, setLists] = useState([])
   const [copyItems, setCopyItems] = useState({status: false, items: {}})
   const [remove, setRemove] = useState({status: false, list: {}})
+  const [cwidth, setCwidth] = useState(0)
   const user = localStorage.getItem('user')
   const databaseReftoLoad = database.ref(`${user}/lists/`).limitToLast(12)
   const databaseRef = database.ref(`${user}/lists/`)
+  window.addEventListener('resize', getClientWidth)
+  let clientW
   useEffect(() => {
     databaseReftoLoad.on('value', 
       function(snapshot) {
@@ -28,6 +32,17 @@ const Lists = (props) => {
       })
     return () => databaseRef.off()
   }, [])
+  useEffect(() => {
+    clientW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
+    setCwidth(clientW)
+    console.log(clientW)
+    return window.removeEventListener("resize", getClientWidth)
+  }, [])
+  function getClientWidth() {
+    console.log('getCW')
+    clientW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
+    setCwidth(clientW)
+  }
   function redirectTolist(listId) {
     return props.history.push(`/app/open-list/${listId}`)
   }
@@ -51,13 +66,20 @@ const Lists = (props) => {
     const items = copyItems.items
     return <Redirect to={{ pathname: '/app/new-list',  state: items }} />
   }
+  console.log(cwidth)
   return (
+    <Fragment>
+    <div className="tip">
+      {
+        cwidth < 500 && <h6>Melhor visualização na horizontal <MdScreenRotation /></h6>
+      }
+        </div>
     <div className="component-wraped">
       <h6>Listas</h6>
       <div className="lists-legend-container">
         <p className='lists-legend'><FaEye /> Visualizar lista.</p>
         <p className='lists-legend'><FaRegCopy /> Copiar items para uma nova lista.</p>
-        <p className='lists-legend'>* Será possível visualizar suas 12 ultimas listas.</p>
+        <p className='lists-legend'>* Será possível visualizar suas 12 últimas listas.</p>
       </div>
       {
         isLoading ? 
@@ -95,6 +117,7 @@ const Lists = (props) => {
         remove={listRemove}
       /> 
     </div>
+    </Fragment>
   )
 }
 

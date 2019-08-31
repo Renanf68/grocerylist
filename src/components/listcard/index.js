@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, Fragment } from 'react'
 import { Col, Row } from 'reactstrap'
-import { MdPlaylistAdd, MdPlaylistAddCheck } from 'react-icons/md'
+import { MdPlaylistAdd, MdPlaylistAddCheck, MdLockOutline } from 'react-icons/md'
 import { database } from '../../firebaseApp'
 import { listCardReducer, initialState } from './listCardReducer';
 import ListTable from './ListTable'
@@ -127,44 +127,37 @@ const ListCard = ({ history, match }) => {
           </button>
         </Col>
       </Row>
+      <div className='tip'>
+        <p>* Suas listas são salvas automaticamente.</p>
+      </div>
       {
         !state.isLoading &&
-        categories.map( cat => {
-          const type = cat.type
-          let list
-          if(type === 'food'){
-            list = state.food
-          } else if (type === 'hygiene'){
-            list = state.hygiene
-          } else if (type === 'cleaning'){
-            list = state.cleaning
-          } else {
-            list = state.others
-          }
-          return (
-            <Fragment key={type}>
+        categories.map( cat => (
+            <Fragment key={cat.type}>
               <h6>{cat.title}</h6>
               <ListTable 
                 isLoading={false}
-                products={list}
+                products={state[cat.type]}
                 editing={editingItemObj}
                 remove={removeItemConfirm}
                 itemCheck={handleCheck}  
               />
             </Fragment>
-            )
-          }
+          )
         )
       }
       <Row>
         <Col xs={12} className='list-card-total'>
           <h6>Total Geral: {state.totalToDisplay}</h6>
-          <button 
-            onClick={() => dispatch({'type': 'HANDLE_CLOSELISTFORM'})}
-            title='Fechar lista'
-            className=' btn btn-success btn-list-close'>
-            Concluir <MdPlaylistAddCheck />
-          </button>
+          {
+            state.listStatus === 'open' &&
+            <button 
+              onClick={() => dispatch({'type': 'HANDLE_CLOSELISTFORM'})}
+              title='Fechar lista'
+              className=' btn btn-success btn-list-close'>
+              <MdLockOutline /> <MdPlaylistAddCheck />
+            </button>
+          }
         </Col>
       </Row>
       <NewItemForm 

@@ -5,7 +5,7 @@ import { dateFormat } from '../../utils'
 
 const ListsTableItem = props => {
     const { id, alias, date, market, total, status, items } = props.list
-    let newStatus = 'Concluída'
+    let newStatus = 'Encerrada'
     if(status === 'open') {
       newStatus = 'Aberta'
     }

@@ -54,8 +54,8 @@ const Login = props => {
     setLogin(!login)
   }
   return (
-    <div className='login-container'>
-      <div className='component-wraped'>
+    <div className='component-wraped'>
+      <div className='login-container'>
         <div className='login-logo-container'>
           <FaShoppingBag id='login-logo'/>
         </div>
@@ -64,7 +64,7 @@ const Login = props => {
         { formErr && <CustonAlert type='warning'>{formErr}</CustonAlert> }
         {
           login ?
-          <Form>
+          <Form className='login-form'>
             <FormGroup>
               <Label for="email">Email:</Label>
               <Input

@@ -43,8 +43,11 @@ const CloseListForm = props => {
   return (
     <Modal isOpen={props.show} toggle={props.toggle} className="component-wraped">
       <div className="new-item-form-header">
-        <h4>Concluir lista: "{props.listAlias}"</h4>
+        <h4>Encerrar lista: "{props.listAlias}"</h4>
         <Button close onClick={props.toggle} />
+      </div>
+      <div className="tip">
+        <p>* Encerrar a lista após a realização das compras.</p>
       </div>
       <Form>
       { formError.status && <CustonAlert type='warning'>{formError.msg}</CustonAlert> }

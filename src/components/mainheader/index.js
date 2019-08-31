@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { MdExitToApp } from 'react-icons/md'
+import { MdExitToApp, MdHelp } from 'react-icons/md'
 import { FaShoppingBag } from 'react-icons/fa' 
 import './styles.css'
 
@@ -16,6 +16,11 @@ const MainHeader = props => {
         <button onClick={props.logout}
           id='logout-btn' title='Sair'>
           <MdExitToApp />
+        </button>
+      </div>
+      <div className="nav-help">
+        <button id='help' title='Ajuda'>
+          <Link to='/app/helps'><MdHelp /></Link>
         </button>
       </div>
     </Fragment>

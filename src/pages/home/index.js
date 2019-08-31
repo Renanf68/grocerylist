@@ -40,7 +40,7 @@ const Home = props => {
             </Button>
             <Button 
               tag={Link} to='/app/lists' color="primary">
-              Gerenciar listas existentes <MdCopy />
+              Gerenciar listas <MdCopy />
             </Button>
           </Fragment>
           :

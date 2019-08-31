@@ -1,5 +1,6 @@
 .App {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   justify-content: center;
   align-items: center;
@@ -18,4 +19,10 @@
 .btn-success-default {
   width: 100%;
   margin-bottom: 12px;
+}
+.tip p {
+  font-size: 0.7rem;
+}
+.tip h6 {
+  font-size: 0.8rem;
 }

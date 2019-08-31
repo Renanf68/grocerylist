@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import {
   Button,
   Form,
   FormGroup,
-  Label,
-  Input
+  Label
 } from "reactstrap";
+import InputWithRef from '../inputwithref'
 import { MdPlaylistAdd } from 'react-icons/md'
 import CustonAlert from '../custonalert'
 import { creatId } from '../../utils' 
@@ -14,6 +14,8 @@ import { creatId } from '../../utils'
 const NewListForm = props => {
   const [alias, setAlias] = useState('')
   const [formError, setFormError] = useState({status: false, mgs: ''})
+  const AliasInputRef = createRef()
+  useEffect(() => AliasInputRef.current.focus(), [])
   function createNewList() {
     const listId = creatId('list')
     const newList = {
@@ -46,10 +48,11 @@ const NewListForm = props => {
       { formError.status && <CustonAlert type='warning'>{formError.msg}</CustonAlert> }
       <FormGroup>
         <Label for="qtd">Apelido:</Label>
-        <Input
-          type="text"
-          name="alias"
-          placeholder="Ex: Lista básica"
+        <InputWithRef
+          ref={AliasInputRef}
+          type='text'
+          name='alias'
+          placeholder='Ex: Lista básica'
           value={alias}
           onChange={(e) => setAlias(e.target.value)}
         />

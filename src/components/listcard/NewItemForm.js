@@ -11,7 +11,6 @@ import { newItemFormValidation, getNewItemObj } from '../../utils'
 import CustonAlert from '../custonalert' 
 import CurrencyInput from '../currencyinput'
 
-
 const NewItemForm = props => {
   const [itemId, setItemId] = useState(null)
   const [product, setProduct] =  useState('')
@@ -31,6 +30,7 @@ const NewItemForm = props => {
       setPrice(punit.edit)
     }
   }, [props.isEditing])
+ 
   function clearFields() {
     setItemId(null)
     setProduct('')
@@ -97,7 +97,7 @@ const NewItemForm = props => {
           </Input>
         </FormGroup>
         <FormGroup>
-          <Label for="qtd">Qtd.:</Label>
+          <Label for="qtd">Quantidade:</Label>
           <Input
             type="number"
             placeholder="0"
