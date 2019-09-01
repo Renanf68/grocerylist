@@ -1,6 +1,7 @@
 .helps {
-  max-width: 350px;
+  max-width: 100vw;
   margin-bottom: 60px;
+  padding: 15px;
 }
 .helps h6 {
   color: #df4723;
