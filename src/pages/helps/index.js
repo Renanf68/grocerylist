@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
 import { FaShoppingBag, FaEye, FaRegCopy, FaEdit, FaCheck, FaUndo } from 'react-icons/fa'
-import { MdExitToApp, MdHelp, MdPlaylistAdd, MdPlaylistAddCheck, MdLockOutline } from 'react-icons/md' 
+import { MdExitToApp, MdHelp, MdPlaylistAdd, MdLockOutline } from 'react-icons/md' 
 
 import './styles.css'
 
