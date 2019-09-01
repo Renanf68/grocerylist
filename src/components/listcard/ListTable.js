@@ -18,7 +18,7 @@ const ListTable = props => {
                     <th title='Quantidade'>Qtd.</th>
                     <th title='Preço unitário'>Preço unitário</th>
                     <th title='Preço total'>Preço total</th>
-                    <th></th>
+                    <th className='list-table-actions'>Ações</th>
                 </tr>
             </thead>
             <tbody>

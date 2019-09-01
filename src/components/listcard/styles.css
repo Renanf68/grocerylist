@@ -21,6 +21,9 @@
   font-size: 0.8rem;
   vertical-align: middle !important;
 }
+.list-table-actions {
+  min-width: 90px;
+}
 .list-item-btns {
   padding: 2px 8px !important;
   margin: 0 3px;
