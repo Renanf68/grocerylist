@@ -1,5 +1,4 @@
 import React from 'react'
-//import { MdEdit, MdDelete } from 'react-icons/md'
 import { FaEdit, FaTrashAlt, FaCheck, FaUndo } from 'react-icons/fa'
 
 const ListTableItem = props => {
@@ -8,9 +7,9 @@ const ListTableItem = props => {
         <tr key={id}>
             {
               check ?
-              <td>{product}</td>
+              <td className='list-card-prodct-name'>{product}</td>
               :
-              <td>
+              <td className='list-card-prodct-name'>
                 <button 
                   className="btn btn-warning list-item-btn-edit"
                   onClick={() => props.editing(props.item)}

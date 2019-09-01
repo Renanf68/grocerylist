@@ -132,32 +132,46 @@ const ListCard = ({ history, match }) => {
       </div>
       {
         !state.isLoading &&
-        categories.map( cat => (
-            <Fragment key={cat.type}>
-              <h6>{cat.title}</h6>
-              <ListTable 
-                isLoading={false}
-                products={state[cat.type]}
-                editing={editingItemObj}
-                remove={removeItemConfirm}
-                itemCheck={handleCheck}  
-              />
-            </Fragment>
-          )
-        )
+          categories.map( cat => {
+            if(state[cat.type].length > 0) {
+              return (
+                <Fragment key={cat.type}>
+                  <h6>{cat.title}</h6>
+                  <ListTable 
+                    products={state[cat.type]}
+                    editing={editingItemObj}
+                    remove={removeItemConfirm}
+                    itemCheck={handleCheck}  
+                  />
+                </Fragment>
+              )
+            } else {
+              return null
+            }
+          })
+      }
+      {
+        state.food.length  < 1 && 
+          state.hygiene.length < 1 && 
+          state.cleaning.length < 1 && 
+          state.others.length < 1 &&
+          <div className="list-card-empty">
+            <p>Não há itens no momento.</p>
+          </div>
       }
       <Row>
         <Col xs={12} className='list-card-total'>
           <h6>Total Geral: {state.totalToDisplay}</h6>
-          {
-            state.listStatus === 'open' &&
-            <button 
-              onClick={() => dispatch({'type': 'HANDLE_CLOSELISTFORM'})}
-              title='Fechar lista'
-              className=' btn btn-success btn-list-close'>
-              <MdLockOutline /> <MdPlaylistAddCheck />
-            </button>
-          }
+        {
+          state.listStatus === 'open' &&
+          <button 
+            onClick={() => dispatch({'type': 'HANDLE_CLOSELISTFORM'})}
+            title='Fechar lista'
+            className=' btn btn-success btn-list-close'>
+            <MdLockOutline /> <MdPlaylistAddCheck />
+          </button>
+            
+        }
         </Col>
       </Row>
       <NewItemForm 

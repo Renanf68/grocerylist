@@ -14,15 +14,25 @@
   height: 1.5em;
   width: 1.5em;
 }
+.list-card th {
+  padding: 0.3rem 0.1rem !important;
+}
+.list-card td {
+  padding: 0.3rem 0 !important;
+}
 .list-table th {
   font-size: 0.8rem;
+  text-align: center;
 }
 .list-table td {
   font-size: 0.8rem;
+  text-align: center;
   vertical-align: middle !important;
 }
 .list-table-actions {
   min-width: 90px;
+}
+.list-card-prodct-name {
 }
 .list-item-btns {
   padding: 2px 8px !important;
@@ -41,6 +51,18 @@
   margin: 0 3px;
   font-size: 0.8rem;
   background-color: khaki !important;
+}
+.list-card-empty {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 !important;
+  margin-bottom: 12px;
+  background-color: gainsboro;
+  color: darkgrey;
+}
+.list-card-empty p {
+  margin: 0 !important;
+  font-size: 16px;
 }
 .empty-list-message {
   padding: 12px 0 !important;

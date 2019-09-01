@@ -33,9 +33,8 @@ const Lists = (props) => {
     return () => databaseRef.off()
   }, [])
   useEffect(() => {
-    clientW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
+    let clientW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
     setCwidth(clientW)
-    console.log(clientW)
     return window.removeEventListener("resize", getClientWidth)
   }, [])
   function getClientWidth() {
@@ -66,7 +65,6 @@ const Lists = (props) => {
     const items = copyItems.items
     return <Redirect to={{ pathname: '/app/new-list',  state: items }} />
   }
-  console.log(cwidth)
   return (
     <Fragment>
     <div className="tip">

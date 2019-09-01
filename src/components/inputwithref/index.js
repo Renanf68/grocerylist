@@ -1,6 +1,6 @@
 import React, { useRef, useImperativeHandle, forwardRef } from 'react'
 
-function InputWithRef(props, ref) {
+const InputWithRef = forwardRef( (props, ref) => {
   const inputRef = useRef();
   useImperativeHandle(ref, () => ({
     focus: () => {
@@ -18,5 +18,5 @@ function InputWithRef(props, ref) {
       onChange={props.onChange} 
     />
   );
-}
-export default InputWithRef = forwardRef(InputWithRef);
+})
+export default InputWithRef;
