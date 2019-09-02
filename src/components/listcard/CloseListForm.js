@@ -19,11 +19,12 @@ const CloseListForm = props => {
     const year = new Date().getFullYear()
     const month = new Date().getMonth() + 1
     const day = new Date().getDate()
-    const date = `${year}-${month < 10 ? '0'+month : month}-${day}`
+    const date = `${year}-${month < 10 ? '0'+month : month}-${day < 10 ? '0'+day : day}`
     return date
   }
   useEffect(() => {
     const newDate = getDate()
+    console.log(newDate)
     setDate(newDate)
   }, [])
   function sendEndListObj() {

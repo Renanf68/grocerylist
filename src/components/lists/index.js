@@ -38,7 +38,6 @@ const Lists = (props) => {
     return window.removeEventListener("resize", getClientWidth)
   }, [])
   function getClientWidth() {
-    console.log('getCW')
     clientW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
     setCwidth(clientW)
   }
@@ -76,7 +75,7 @@ const Lists = (props) => {
       <h6>Listas</h6>
       <div className="lists-legend-container">
         <p className='lists-legend'><FaEye /> Visualizar lista.</p>
-        <p className='lists-legend'><FaRegCopy /> Copiar items para uma nova lista.</p>
+        <p className='lists-legend'><FaRegCopy /> Copiar itens para uma nova lista.</p>
         <p className='lists-legend'>* Será possível visualizar suas 12 últimas listas.</p>
       </div>
       {
