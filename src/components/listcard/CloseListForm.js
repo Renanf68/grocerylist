@@ -48,7 +48,7 @@ const CloseListForm = props => {
         <Button close onClick={props.toggle} />
       </div>
       <div className="tip">
-        <p>* Encerrar a lista após a realização das compras.</p>
+        <p>* Esta opção deve ser usada para encerrar a lista, após a realização das compras.</p>
       </div>
       <Form>
       { formError.status && <CustonAlert type='warning'>{formError.msg}</CustonAlert> }

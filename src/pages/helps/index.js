@@ -39,7 +39,7 @@ const Helps = props => {
           <FaEye />
         </Col>
         <Col xs={11}>
-          <p>O botão de visualização permite rever as listas que já foram criadas: abertas e encerradas.</p>
+          <p>Este botão permite visualizar as listas que já foram criadas (estando abertas ou encerradas).</p>
         </Col>
       </Row>
       <Row className="help">
@@ -94,7 +94,7 @@ const Helps = props => {
       <h6>Criar novo item:</h6>
       <Row className="help">
         <Col xs={12}>
-          <p>Ao clicar no botão <MdPlaylistAdd />, é possível criar um novo item para a lista contendo, pelo menos, <strong>nome, categoria e quantidade</strong>. Durante a realização das compras, é possível editar <FaEdit /> o produto e inserir o preço unitário do mesmo.</p>
+          <p>Ao clicar no botão "Item <MdPlaylistAdd />", é possível criar um novo item para a lista. O mesmo deve conter, pelo menos, <strong>nome, categoria e quantidade</strong>. Durante a realização das compras, é possível editar ("<FaEdit />") o produto e inserir o seu preço unitário, por exemplo, verificado na prateleira do estabelecimento.</p>
         </Col>
       </Row>
     </div>
