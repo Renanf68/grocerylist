@@ -1,8 +1,10 @@
 import React, { useEffect, useReducer, Fragment } from 'react'
-import { Col, Row } from 'reactstrap'
+import { Col, Row, Input, Button } from 'reactstrap'
 import { MdPlaylistAdd, MdPlaylistAddCheck, MdLockOutline } from 'react-icons/md'
+import { FaEdit, FaUndo } from 'react-icons/fa'
 import { database } from '../../firebaseApp'
 import { listCardReducer, initialState } from './listCardReducer';
+import { concatArrays } from  '../../utils'
 import ListTable from './ListTable'
 import NewItemForm from './NewItemForm'
 import CloseListForm from './CloseListForm'
@@ -32,6 +34,15 @@ const ListCard = ({ history, match }) => {
     } else {
       return dispatch({'type': 'HANDLE_NEWITEMFORM'})
     }
+  }
+  function updateListAlias() {
+    databaseRef.update({ alias: state.editingAlias.newAlias })
+      .then(
+        () => {
+          dispatch({'type': 'EDIT_ALIAS_SUCCESS'})
+        },
+        (err) => console.log(err)  
+      )
   }
   function saveNewItemObj(newItem) {
     const { id, obj } = newItem
@@ -81,11 +92,7 @@ const ListCard = ({ history, match }) => {
       )
   }
   function itemsCheckAll() {
-    let itemsArr = []
-    Array.prototype.push.apply(itemsArr, state.food)
-    Array.prototype.push.apply(itemsArr, state.hygiene)
-    Array.prototype.push.apply(itemsArr, state.cleaning)
-    Array.prototype.push.apply(itemsArr, state.others)
+    const itemsArr = concatArrays(state.food, state.hygiene, state.cleaning, state.others)
     itemsArr.map( item => {
       return (
         databaseRef.child(`items/${item.id}/`)
@@ -116,7 +123,37 @@ const ListCard = ({ history, match }) => {
     <div className='component-wraped'>
       <Row>
         <Col xs={8} className='list-header-title'>
-          <h4>{state.isLoading ? 'Carregando...' : state.listAlias}</h4>
+        {
+          state.editingAlias.status ?
+          <div className='editing-alias-container'>
+            <Input
+              type="text"
+              name="editalias"
+              value={state.editingAlias.newAlias}
+              onChange={(e) => dispatch({type: 'SEND_EDITING_ALIAS', payload: e.target.value})}
+            />
+            <Button 
+              color="success"
+              className='edit-list-alias-btn' 
+              onClick={updateListAlias}>
+              <FaEdit />
+            </Button>
+            <Button 
+              color="warning" 
+              className='edit-list-alias-btn'
+              onClick={() => dispatch({type: 'EDIT_ALIAS_SUCCESS'})}>
+              <FaUndo />
+            </Button>
+          </div> 
+          :
+          <h4 onClick={() => dispatch({type: 'EDITING_ALIAS_TRUE'})}>
+            {state.isLoading ? 
+              'Carregando...' 
+              : 
+              <span>{state.listAlias} <FaEdit id='edit-list-alias'/></span>
+            } 
+          </h4>
+        }
         </Col>
         <Col xs={4} className='list-header-btn'>
           <button

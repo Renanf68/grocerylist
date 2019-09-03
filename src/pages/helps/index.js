@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
-import { FaShoppingBag, FaEye, FaRegCopy, FaEdit, FaCheck, FaUndo } from 'react-icons/fa'
+import { FaEye, FaRegCopy, FaEdit, FaCheck, FaUndo } from 'react-icons/fa'
 import { MdExitToApp, MdHelp, MdPlaylistAdd, MdLockOutline } from 'react-icons/md'
 import Logo from '../../images/logo-orange.png' 
 

@@ -168,3 +168,12 @@ export function dateFormat(date) {
     return date
   }
 }
+
+export function concatArrays(cat1, cat2, cat3, cat4) {
+  let newArr = []
+  Array.prototype.push.apply(newArr, cat1)
+  Array.prototype.push.apply(newArr, cat2)
+  Array.prototype.push.apply(newArr, cat3)
+  Array.prototype.push.apply(newArr, cat4)
+  return newArr
+}

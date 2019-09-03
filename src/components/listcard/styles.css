@@ -2,6 +2,9 @@
   display: flex;
   justify-content: flex-start;
 }
+.list-header-title h4 {
+  cursor: pointer;
+}
 .list-header-btn {
   display: flex;
   justify-content: flex-end;
@@ -13,6 +16,19 @@
 .list-header-btn svg {
   height: 1.5em;
   width: 1.5em;
+}
+.editing-alias-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 12px;
+}
+#edit-list-alias {
+  height: 0.6em;
+  width: 0.6em;
+  margin-bottom: 8px;
+}
+.edit-list-alias-btn {
+  margin-left: 6px;
 }
 .list-card th {
   padding: 0.3rem 0.1rem !important;

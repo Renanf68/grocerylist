@@ -7,12 +7,10 @@ import {
   Input,
   Spinner
 } from "reactstrap";
-import { FaShoppingBag } from 'react-icons/fa'
 import CustonAlert from '../../components/custonalert' 
 import { handleSignUpError } from '../../utils'
 
 import Logo from '../../images/logo-orange.png'
-import Logo2 from '../../images/logo-standard.png'
 
 import './styles.css'
 

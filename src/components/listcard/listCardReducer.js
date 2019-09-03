@@ -10,6 +10,10 @@ export const initialState = {
     type: '',
     message: ''
   },
+  editingAlias: {
+    status: false,
+    newAlias: ''
+  },
   isEdit: {
     status: false,
     itemId: null,
@@ -67,6 +71,30 @@ export const listCardReducer =  (state, action) => {
       return {
         ...state,
         showCloseListForm: !state.showCloseListForm
+      }
+    case 'EDITING_ALIAS_TRUE':
+      return {
+        ...state,
+        editingAlias: {
+          status: true,
+          newAlias: state.listAlias
+        }
+      }
+    case 'SEND_EDITING_ALIAS':
+      return {
+        ...state,
+        editingAlias: {
+          status: true,
+          newAlias: action.payload
+        }
+      }
+    case 'EDIT_ALIAS_SUCCESS':
+      return {
+        ...state,
+        editingAlias: {
+          status: false,
+          newAlias: ''
+        }
       }
     case 'CLEAR_MSG':
         return {
