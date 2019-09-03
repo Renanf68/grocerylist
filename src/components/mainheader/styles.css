@@ -22,11 +22,9 @@
 #logo:focus {
   outline: none;
 }
-#nav-logo svg {
-  width: 1.4em;
-  height: 1.4em;
-  margin-bottom: 4px;
-  color: #df4723;
+#nav-logo img {
+  width: 27px;
+  height: 27px;
 }
 #logout-btn {
   width: 50px;

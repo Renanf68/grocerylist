@@ -11,9 +11,6 @@ import { FaShoppingBag } from 'react-icons/fa'
 import CustonAlert from '../../components/custonalert' 
 import { handleSignUpError } from '../../utils'
 
-import Logo from '../../images/logo-orange.png'
-import Logo2 from '../../images/logo-standard.png'
-
 import './styles.css'
 
 const Login = props => {
@@ -60,9 +57,9 @@ const Login = props => {
     <div className='component-wraped'>
       <div className='login-container'>
         <div className='login-logo-container'>
-          <img src={Logo} alt="GroceryList"/>
-          <h4>GroceryList <span>beta</span></h4>
+          <FaShoppingBag id='login-logo'/>
         </div>
+        <h4>GroceryList</h4>
         { props.error && <CustonAlert type='warning'>{props.error}</CustonAlert> }
         { formErr && <CustonAlert type='warning'>{formErr}</CustonAlert> }
         {

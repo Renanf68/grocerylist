@@ -2,7 +2,6 @@ import React, { useState, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { MdExitToApp, MdHelp } from 'react-icons/md'
 import { FaShoppingBag } from 'react-icons/fa' 
-import Logo from '../../images/logo-orange.png'
 import './styles.css'
 import LogoutVerification from '../logoutverification';
 
@@ -12,9 +11,7 @@ const MainHeader = props => {
     <Fragment>
       <div className='nav-icon nav-logo'>
         <button id='nav-logo' title='Página inicial'>
-          <Link to='/app'>
-            <img src={Logo} alt="GroceryList"/>
-          </Link>
+          <Link to='/app'><FaShoppingBag /></Link>
         </button>
       </div>
       <div className='nav-icon nav-logout'>

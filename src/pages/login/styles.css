@@ -7,6 +7,16 @@
 }
 .login-logo-container {
   text-align: center;
+  margin-bottom: 8px;
+}
+.login-logo-container img {
+  width: 80px;
+  height: 80px;
+  padding: 8px;
+}
+.login-logo-container span {
+  font-size: 0.8rem;
+  color: grey;
 }
 #login-logo {
   width: 2.4em;
