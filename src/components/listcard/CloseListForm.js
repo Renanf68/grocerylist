@@ -24,7 +24,6 @@ const CloseListForm = props => {
   }
   useEffect(() => {
     const newDate = getDate()
-    console.log(newDate)
     setDate(newDate)
   }, [])
   function sendEndListObj() {

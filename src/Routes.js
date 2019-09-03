@@ -12,7 +12,7 @@ import './App.css';
 const Routes = props => {
   return (
     <Fragment>
-      <MainHeader logout={props.signOut} />
+      <MainHeader signOut={props.signOut} />
       <Switch>
         <Route path='/app' exact component={Home} />
         <Route path='/app/helps' exact component={Helps} />

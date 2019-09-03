@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { MdExitToApp, MdHelp } from 'react-icons/md'
 import { FaShoppingBag } from 'react-icons/fa' 
 import './styles.css'
+import LogoutVerification from '../logoutverification';
 
 const MainHeader = props => {
+  const [logoutApp, setLogoutApp] = useState(false)
   return (
     <Fragment>
       <div className='nav-icon nav-logo'>
@@ -13,7 +15,7 @@ const MainHeader = props => {
         </button>
       </div>
       <div className='nav-icon nav-logout'>
-        <button onClick={props.logout}
+        <button onClick={() => setLogoutApp(true)}
           id='logout-btn' title='Sair'>
           <MdExitToApp />
         </button>
@@ -23,6 +25,12 @@ const MainHeader = props => {
           <Link to='/app/helps'><MdHelp /></Link>
         </button>
       </div>
+      <LogoutVerification 
+        show={logoutApp} 
+        toggle={() => setLogoutApp(false)}
+        logout={props.signOut}
+        cancel={() => setLogoutApp(false)}  
+      />
     </Fragment>
   )
 }
