@@ -47,7 +47,7 @@ const Helps = props => {
           <FaRegCopy />
         </Col>
         <Col xs={11}>
-          <p>Este botão premite copiar todos os items cadastrados em uma lista, para uma nova lista a ser criada.</p>
+          <p>Este botão premite copiar todos os itens cadastrados em uma lista, para uma nova lista a ser criada.</p>
         </Col>
       </Row>
       <h6>Listas:</h6>
@@ -94,7 +94,7 @@ const Helps = props => {
       <h6>Criar novo item:</h6>
       <Row className="help">
         <Col xs={12}>
-          <p>Ao clicar no botão "Item <MdPlaylistAdd />", é possível criar um novo item para a lista. O mesmo deve conter, pelo menos, <strong>nome, categoria e quantidade</strong>. Durante a realização das compras, é possível editar ("<FaEdit />") o produto e inserir o seu preço unitário, por exemplo, verificado na prateleira do estabelecimento.</p>
+          <p>Ao clicar no botão "Item <MdPlaylistAdd />", é possível criar um novo item para a lista. O mesmo deve conter, pelo menos, <strong>nome</strong>, <strong>categoria</strong> e <strong>quantidade</strong>. Durante a realização das compras, é possível editar ("<FaEdit />") o produto e inserir o seu preço unitário, por exemplo, verificado na prateleira do estabelecimento.</p>
         </Col>
       </Row>
     </div>
