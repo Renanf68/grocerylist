@@ -15,7 +15,7 @@ const NewListForm = props => {
   const [alias, setAlias] = useState('')
   const [formError, setFormError] = useState({status: false, mgs: ''})
   const AliasInputRef = createRef()
-  useEffect(() => AliasInputRef.current.focus(), [])
+  useEffect(() => AliasInputRef.current.focus(), [AliasInputRef])
   function createNewList() {
     const listId = creatId('list')
     const newList = {

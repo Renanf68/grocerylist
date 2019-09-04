@@ -11,15 +11,16 @@ import RemoveVerification from '../removeverification'
 
 import './styles.css'
 
+const user = localStorage.getItem('user')
+const databaseReftoLoad = database.ref(`${user}/lists/`).limitToLast(12)
+const databaseRef = database.ref(`${user}/lists/`)
+
 const Lists = (props) => {
   const [isLoading, setIsLoading] = useState(true)
   const [lists, setLists] = useState([])
   const [copyItems, setCopyItems] = useState({status: false, items: {}})
   const [remove, setRemove] = useState({status: false, list: {}})
   const [cwidth, setCwidth] = useState(0)
-  const user = localStorage.getItem('user')
-  const databaseReftoLoad = database.ref(`${user}/lists/`).limitToLast(12)
-  const databaseRef = database.ref(`${user}/lists/`)
   window.addEventListener('resize', getClientWidth)
   let clientW
   useEffect(() => {
@@ -35,11 +36,11 @@ const Lists = (props) => {
   useEffect(() => {
     let clientW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
     setCwidth(clientW)
-    return window.removeEventListener("resize", getClientWidth)
+    return window.removeEventListener("resize", () => {})
   }, [])
   function getClientWidth() {
     clientW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
-    setCwidth(clientW)
+    return setCwidth(clientW)
   }
   function redirectTolist(listId) {
     return props.history.push(`/app/open-list/${listId}`)

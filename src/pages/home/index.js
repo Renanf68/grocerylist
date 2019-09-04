@@ -23,7 +23,7 @@ const Home = props => {
         setIsLoading(false)
       })
     return () => databaseRef.off()
-  }, [])
+  }, [databaseRef])
   return (
     <div className='home-container'>
       {

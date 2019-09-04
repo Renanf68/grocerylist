@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, Fragment } from 'react'
+import React, { useEffect, useReducer, useMemo, Fragment } from 'react'
 import { Col, Row, Input, Button } from 'reactstrap'
 import { MdPlaylistAdd, MdPlaylistAddCheck, MdLockOutline } from 'react-icons/md'
 import { FaEdit, FaUndo } from 'react-icons/fa'
@@ -13,10 +13,10 @@ import RemoveVerification from '../removeverification'
 import './styles.css'
 
 const ListCard = ({ history, match }) => {
-  const [state, dispatch] = useReducer(listCardReducer, initialState);
+  const [state, dispatch] = useReducer(listCardReducer, initialState)
   const user = localStorage.getItem('user')
   const listId = match.params.id
-  const databaseRef = database.ref(`${user}/lists/${listId}`)
+  const databaseRef = useMemo( () => database.ref(`${user}/lists/${listId}`), [user, listId] )
   useEffect(() => {
     dispatch({'type': 'SET_LIST_ID', payload: listId })
   }, [listId])
@@ -27,7 +27,7 @@ const ListCard = ({ history, match }) => {
         dispatch({'type': 'GET_LIST', payload: list })
       })
     return () => databaseRef.off()
-  }, [])
+  }, [databaseRef])
   function handleNewItemForm(type) {
     if(type === 'exit-edit') {
       return dispatch({'type': 'EXIT_EDIT'})
