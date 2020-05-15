@@ -1,74 +1,80 @@
-import React, { useState, useEffect } from 'react'
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Modal
-} from "reactstrap";
-import { newItemFormValidation, getNewItemObj } from '../../utils'
-import CustonAlert from '../custonalert' 
-import CurrencyInput from '../currencyinput'
+import React, { useState, useEffect } from "react";
+import { Button, Form, FormGroup, Label, Input, Modal } from "reactstrap";
+import { newItemFormValidation, getNewItemObj } from "../../utils";
+import CustonAlert from "../custonalert";
+import CurrencyInput from "../currencyinput";
 
-const NewItemForm = props => {
-  const [itemId, setItemId] = useState(null)
-  const [product, setProduct] =  useState('')
-  const [category, setCategory] =  useState('food')
-  const [qtd, setQtd] =  useState(0)
-  const [price, setPrice] =  useState(0)
-  const [formError, setFormError] = useState({status: false, msg: ''})
+const NewItemForm = (props) => {
+  const [itemId, setItemId] = useState(null);
+  const [product, setProduct] = useState("");
+  const [category, setCategory] = useState("food");
+  const [qtd, setQtd] = useState(1);
+  const [price, setPrice] = useState(0);
+  const [formError, setFormError] = useState({ status: false, msg: "" });
 
   useEffect(() => {
-    if(props.isEditing.status) {
-      const { id, obj } = props.isEditing
-      const { product, category, qtd, punit } = obj
-      setItemId(id)
-      setProduct(product)
-      setCategory(category)
-      setQtd(qtd)
-      setPrice(punit.edit)
+    if (props.isEditing.status) {
+      const { id, obj } = props.isEditing;
+      const { product, category, qtd, punit } = obj;
+      setItemId(id);
+      setProduct(product);
+      setCategory(category);
+      setQtd(qtd);
+      setPrice(punit.edit);
     }
-  }, [props.isEditing])
- 
+  }, [props.isEditing]);
+
   function clearFields() {
-    setItemId(null)
-    setProduct('')
-    setCategory('food')
-    setQtd(0)
-    setPrice(0)
+    setItemId(null);
+    setProduct("");
+    setCategory("food");
+    setQtd(0);
+    setPrice(0);
   }
   function handleToggle() {
-    clearFields()
-    if(itemId) {
-      props.toggle('exit-edit')
+    clearFields();
+    if (itemId) {
+      props.toggle("exit-edit");
     } else {
-      props.toggle('exit')
+      props.toggle("exit");
     }
   }
   function sendNewItem() {
-    setFormError({status: false, msg: ''})
-    const validation = newItemFormValidation(product, qtd)
-    if(!validation.status) {
-      return setFormError({status:true, msg: validation.msg})
+    setFormError({ status: false, msg: "" });
+    const validation = newItemFormValidation(product, qtd);
+    if (!validation.status) {
+      return setFormError({ status: true, msg: validation.msg });
     }
-    const newItem = getNewItemObj(props.listId, itemId, product, category, qtd, price)
-    if(props.isEditing.status) {
-      props.updateItemObj(newItem)
-      handleToggle()
+    const newItem = getNewItemObj(
+      props.listId,
+      itemId,
+      product,
+      category,
+      qtd,
+      price
+    );
+    if (props.isEditing.status) {
+      props.updateItemObj(newItem);
+      handleToggle();
     } else {
-      props.saveNewItemObj(newItem)
-      clearFields()
+      props.saveNewItemObj(newItem);
+      clearFields();
     }
   }
   return (
-    <Modal isOpen={props.show} toggle={handleToggle} className="component-wraped">
+    <Modal
+      isOpen={props.show}
+      toggle={handleToggle}
+      className="component-wraped"
+    >
       <div className="new-item-form-header">
-        <h4>{props.isEditing.status ? 'Editar item' : 'Novo item'}</h4>
+        <h4>{props.isEditing.status ? "Editar item" : "Novo item"}</h4>
         <Button close onClick={handleToggle} />
       </div>
       <Form>
-        { formError.status && <CustonAlert type='warning'>{formError.msg}</CustonAlert> }
+        {formError.status && (
+          <CustonAlert type="warning">{formError.msg}</CustonAlert>
+        )}
         <FormGroup>
           <Label for="prod">Produto:</Label>
           <Input
@@ -87,13 +93,11 @@ const NewItemForm = props => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            {
-              props.categories.map( 
-                cat => <option 
-                        key={cat.type} value={`${cat.type}`}>{`${cat.title}`}
-                      </option>
-              )
-            }
+            {props.categories.map((cat) => (
+              <option key={cat.type} value={`${cat.type}`}>
+                {`${cat.title}`}
+              </option>
+            ))}
           </Input>
         </FormGroup>
         <FormGroup>
@@ -111,22 +115,24 @@ const NewItemForm = props => {
             name="price"
             value={price}
             precision={2}
-            onInputChange={value => setPrice(value)}
+            onInputChange={(value) => setPrice(value)}
           />
         </FormGroup>
-        <Button 
-          className='btn-success-default' color="success" 
-          onClick={sendNewItem}>
+        <Button
+          className="btn-success-default"
+          color="success"
+          onClick={sendNewItem}
+        >
           Salvar
         </Button>
       </Form>
-      { props.msg.status && 
-          <CustonAlert type={`${props.msg.type}`}>
-            {props.msg.message}
-          </CustonAlert> 
-      }
+      {props.msg.status && (
+        <CustonAlert type={`${props.msg.type}`}>
+          {props.msg.message}
+        </CustonAlert>
+      )}
     </Modal>
-  )
-}
+  );
+};
 
-export default NewItemForm
+export default NewItemForm;

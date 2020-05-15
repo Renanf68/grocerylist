@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { MdExitToApp, MdHelp } from 'react-icons/md'
-import Logo from '../../images/logo-orange.png'
+import Logo from '../../images/newlogo.png'
 import './styles.css'
 import LogoutVerification from '../logoutverification';
 

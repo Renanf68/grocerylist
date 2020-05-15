@@ -1,5 +1,5 @@
-import toArray from 'lodash.toarray'
-import { convertMathToBRL } from '../../utils'
+import toArray from "lodash.toarray";
+import { convertMathToBRL } from "../../utils";
 
 export const initialState = {
   isLoading: true,
@@ -7,50 +7,62 @@ export const initialState = {
   showCloseListForm: false,
   msg: {
     status: false,
-    type: '',
-    message: ''
+    type: "",
+    message: "",
   },
   editingAlias: {
     status: false,
-    newAlias: ''
+    newAlias: "",
   },
   isEdit: {
     status: false,
     itemId: null,
-    obj: {}
+    obj: {},
   },
   isRemoving: {
     status: false,
     itemId: null,
-    product: ''
+    category: "",
+    product: "",
   },
-  listId: '',
-  listAlias: '',
-  listStatus: 'open',
+  listId: "",
+  listAlias: "",
+  listStatus: "open",
   food: [],
   hygiene: [],
   cleaning: [],
   others: [],
-  totalToDisplay: 0
-}
+  totalToDisplay: 0,
+};
 
-export const listCardReducer =  (state, action) => {
+export const listCardReducer = (state, action) => {
   switch (action.type) {
-    case 'SET_LIST_ID':
+    case "SET_LIST_ID":
       return {
         ...state,
-        listId: action.payload
-      }
-    case 'GET_LIST':
-      const listAlias = action.payload.alias
-      const listStatus = action.payload.status
-      const listItems = action.payload.items ? toArray(action.payload.items) : [] 
-      const total = listItems.map( prod => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0)
-      const totalToDisplay = convertMathToBRL(total)
-      const food = listItems.filter(prod => prod.category === 'food')
-      const hygiene = listItems.filter(prod => prod.category === 'hygiene')
-      const cleaning = listItems.filter(prod => prod.category === 'cleaning')
-      const others = listItems.filter(prod => prod.category === 'others')
+        listId: action.payload,
+      };
+    case "GET_LIST":
+      const listAlias = action.payload.alias;
+      const listStatus = action.payload.status;
+      const food = action.payload.items.food
+        ? toArray(action.payload.items.food)
+        : [];
+      const hygiene = action.payload.items.hygiene
+        ? toArray(action.payload.items.hygiene)
+        : [];
+      const cleaning = action.payload.items.cleaning
+        ? toArray(action.payload.items.cleaning)
+        : [];
+      const others = action.payload.items.others
+        ? toArray(action.payload.items.others)
+        : [];
+      const total =
+        food.map((prod) => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0) +
+        hygiene.map((prod) => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0) +
+        cleaning.map((prod) => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0) +
+        others.map((prod) => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0);
+      const totalToDisplay = convertMathToBRL(total);
       return {
         ...state,
         isLoading: false,
@@ -60,62 +72,62 @@ export const listCardReducer =  (state, action) => {
         hygiene,
         cleaning,
         others,
-        totalToDisplay
-      }
-    case 'HANDLE_NEWITEMFORM':
+        totalToDisplay,
+      };
+    case "HANDLE_NEWITEMFORM":
       return {
         ...state,
-        showNewItemForm: !state.showNewItemForm
-      }
-    case 'HANDLE_CLOSELISTFORM':
+        showNewItemForm: !state.showNewItemForm,
+      };
+    case "HANDLE_CLOSELISTFORM":
       return {
         ...state,
-        showCloseListForm: !state.showCloseListForm
-      }
-    case 'EDITING_ALIAS_TRUE':
-      return {
-        ...state,
-        editingAlias: {
-          status: true,
-          newAlias: state.listAlias
-        }
-      }
-    case 'SEND_EDITING_ALIAS':
+        showCloseListForm: !state.showCloseListForm,
+      };
+    case "EDITING_ALIAS_TRUE":
       return {
         ...state,
         editingAlias: {
           status: true,
-          newAlias: action.payload
-        }
-      }
-    case 'EDIT_ALIAS_SUCCESS':
+          newAlias: state.listAlias,
+        },
+      };
+    case "SEND_EDITING_ALIAS":
+      return {
+        ...state,
+        editingAlias: {
+          status: true,
+          newAlias: action.payload,
+        },
+      };
+    case "EDIT_ALIAS_SUCCESS":
       return {
         ...state,
         editingAlias: {
           status: false,
-          newAlias: ''
-        }
-      }
-    case 'CLEAR_MSG':
-        return {
-          ...state,
-          msg: {
-            status: false,
-            type: '',
-            message: ''
-          }
-        }
-    case 'SAVE_ITEM_SUCCESS':
+          newAlias: "",
+        },
+      };
+    case "CLEAR_MSG":
+      return {
+        ...state,
+        msg: {
+          status: false,
+          type: "",
+          message: "",
+        },
+      };
+    case "SAVE_ITEM_SUCCESS":
       return {
         ...state,
         msg: {
           status: true,
-          type: 'success',
-          message: 'Item salvo!'
-        }
-      }
-    case 'EDITING_ITEM':
-        const { id, category, product, qtd, punit } = action.payload
+          type: "success",
+          message: "Item salvo!",
+        },
+      };
+    case "EDITING_ITEM":
+      const { id, category, product, qtd, punit } = action.payload;
       return {
         ...state,
         showNewItemForm: true,
@@ -126,81 +138,83 @@ export const listCardReducer =  (state, action) => {
             category,
             product,
             qtd,
-            punit
-          }
-        }
-      }
-    case 'EXIT_EDIT':
-        return {
-          ...state,
-          showNewItemForm: false,
-          isEdit: {
-            status: false,
-            id: null,
-            obj: {}
-          }
-        }
-    case 'IS_REMOVING':
+            punit,
+          },
+        },
+      };
+    case "EXIT_EDIT":
+      return {
+        ...state,
+        showNewItemForm: false,
+        isEdit: {
+          status: false,
+          id: null,
+          obj: {},
+        },
+      };
+    case "IS_REMOVING":
       return {
         ...state,
         isRemoving: {
           status: true,
           itemId: action.payload.itemId,
-          product: action.payload.product
-        }
-      }
-    case 'EXIT_REMOVING':
-        return {
-          ...state,
-          isRemoving: {
-            status: false,
-            itemId: null,
-            product: ''
-          }
-        }
-    case 'LOAD_DATA':
-      return initialState
-    case 'CHANGE_TYPE':
+          category: action.payload.category,
+          product: action.payload.product,
+        },
+      };
+    case "EXIT_REMOVING":
       return {
         ...state,
-        typeInput: action.payload
-      }
-    case 'CHANGE_ATIV':
+        isRemoving: {
+          status: false,
+          itemId: null,
+          category: "",
+          product: "",
+        },
+      };
+    case "LOAD_DATA":
+      return initialState;
+    case "CHANGE_TYPE":
       return {
         ...state,
-        ativInput: action.payload
-      }
-    case 'CHANGE_QTD':
+        typeInput: action.payload,
+      };
+    case "CHANGE_ATIV":
       return {
         ...state,
-        qtdInput: action.payload
-      }
-    case 'CHANGE_PC':
+        ativInput: action.payload,
+      };
+    case "CHANGE_QTD":
       return {
         ...state,
-        pcInput: action.payload
-      }
-    case 'CHANGE_DOC':
+        qtdInput: action.payload,
+      };
+    case "CHANGE_PC":
       return {
         ...state,
-        docInput: action.payload
-      }
-    case 'CHANGE_PV':
+        pcInput: action.payload,
+      };
+    case "CHANGE_DOC":
       return {
         ...state,
-        pvInput: action.payload
-      }
-    case 'CHANGE_DOV':
+        docInput: action.payload,
+      };
+    case "CHANGE_PV":
       return {
         ...state,
-        dovInput: action.payload
-      }
-    case 'SET_MESSAGE':
+        pvInput: action.payload,
+      };
+    case "CHANGE_DOV":
       return {
         ...state,
-        message: action.payload
-      }
+        dovInput: action.payload,
+      };
+    case "SET_MESSAGE":
+      return {
+        ...state,
+        message: action.payload,
+      };
     default:
-      return state
+      return state;
   }
-}
+};

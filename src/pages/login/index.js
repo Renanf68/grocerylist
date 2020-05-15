@@ -10,7 +10,7 @@ import {
 import CustonAlert from '../../components/custonalert' 
 import { handleSignUpError } from '../../utils'
 
-import Logo from '../../images/logo-orange.png'
+import Logo from '../../images/newlogo.png'
 
 import './styles.css'
 

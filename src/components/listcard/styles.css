@@ -113,5 +113,16 @@
   justify-content: space-between;
   margin-bottom: 12px;
 }
-.item-checked td {
+.grab-item {
+  cursor: grab;
+}
+.is-dragging {
+  background-color: rgb(238, 238, 238);
+  border: 2px dashed rgba(0, 0, 0, 0.2);
+}
+.is-dragging .grab-item {
+  cursor: grabbing !important;
+}
+.is-dragging td {
+  opacity: 0;
 }

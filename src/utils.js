@@ -1,35 +1,35 @@
-import toArray from 'lodash.toarray'
-import { database } from './firebaseApp'
+import toArray from "lodash.toarray";
+import { database } from "./firebaseApp";
 
 export function handleAuthError(code) {
-  console.log(code)
-  if(code === 'auth/wrong-password') {
-    return 'Senha incorreta.'
-  } else if (code === 'auth/invalid-email') {
-    return 'Formato de email inválido.'
-  } else if (code === 'auth/user-not-found') {
-    return 'Usuário não encontrado.'
-  } else if (code === 'auth/email-already-in-use') {
-    return 'Usuário já cadastrado.' 
-  } else if (code === 'auth/weak-password') {
-    return 'Senha fraca.' 
+  console.log(code);
+  if (code === "auth/wrong-password") {
+    return "Senha incorreta.";
+  } else if (code === "auth/invalid-email") {
+    return "Formato de email inválido.";
+  } else if (code === "auth/user-not-found") {
+    return "Usuário não encontrado.";
+  } else if (code === "auth/email-already-in-use") {
+    return "Usuário já cadastrado.";
+  } else if (code === "auth/weak-password") {
+    return "Senha fraca.";
   } else {
-    return 'Erro não identificado.'
+    return "Erro não identificado.";
   }
 }
 export function handleSignUpError(email, passwd, passwd2) {
-  if(email !== '') {
-    if(passwd !== ''){
-      if(passwd === passwd2) {
-        return { status: true, msg: null }
+  if (email !== "") {
+    if (passwd !== "") {
+      if (passwd === passwd2) {
+        return { status: true, msg: null };
       } else {
-        return { status: false, msg: 'As senhas não conferem.' }
+        return { status: false, msg: "As senhas não conferem." };
       }
     } else {
-      return { status: false, msg: 'É preciso criar uma senha.' }
+      return { status: false, msg: "É preciso criar uma senha." };
     }
   } else {
-    return { status: false, msg: 'Favor informar seu email.' }
+    return { status: false, msg: "Favor informar seu email." };
   }
 }
 
@@ -45,17 +45,17 @@ export function handleSignUpError(email, passwd, passwd2) {
   return newId;
 }*/
 export function creatId(type, listId) {
-  const user = localStorage.getItem('user')
-  if(type === 'list'){
-    const newListId = database.ref(user).child('/lists').push().key
-    return newListId
-  } else if (type === 'item') {
-    const itemId = database.ref(`${user}/lists`).child(`/${listId}`).push().key
-    return itemId
+  const user = localStorage.getItem("user");
+  if (type === "list") {
+    const newListId = database.ref(user).child("/lists").push().key;
+    return newListId;
+  } else if (type === "item") {
+    const itemId = database.ref(`${user}/lists`).child(`/${listId}`).push().key;
+    return itemId;
   }
 }
 
-export const formatToFloat = rawValue => {
+export const formatToFloat = (rawValue) => {
   let str = String(rawValue);
   if (str.length < 2) {
     str = `0${str}`;
@@ -72,75 +72,79 @@ export function convertMathToBRL(math) {
   let newString = math.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     style: "currency",
-    currency: "BRL"
+    currency: "BRL",
   });
   return newString;
 }
 
 export function newItemFormValidation(product, qtd) {
-  if(product === '') {
-    if(qtd < 1) {
-      return {status: false, msg: 'Favor informar o nome do produto e a quantidade desejada.'}
+  if (product === "") {
+    if (qtd < 1) {
+      return {
+        status: false,
+        msg: "Favor informar o nome do produto e a quantidade desejada.",
+      };
     } else {
-      return {status: false, msg: 'Favor informar o nome do produto.'}
-    } 
+      return { status: false, msg: "Favor informar o nome do produto." };
+    }
   } else {
-    if(qtd < 1) {
-      return {status: false, msg: 'Favor informar a quantidade desejada.'}
-    } 
+    if (qtd < 1) {
+      return { status: false, msg: "Favor informar a quantidade desejada." };
+    }
   }
-  return {status: true, msg: ''}
+  return { status: true, msg: "" };
 }
 
 export function formDateValidation(date) {
-  const dateArr = date.split('', 10)
-  if(dateArr.length > 0) {
-    if(dateArr[4] !== '-') {
-      return {status: false, msg: 'Favor informar uma data válida.' }
+  const dateArr = date.split("", 10);
+  if (dateArr.length > 0) {
+    if (dateArr[4] !== "-") {
+      return { status: false, msg: "Favor informar uma data válida." };
     } else {
-      if(dateArr[0] !== '2' && dateArr[1] !== '0') {
-        return {status: false, msg: 'Favor informar uma data válida.' }
+      if (dateArr[0] !== "2" && dateArr[1] !== "0") {
+        return { status: false, msg: "Favor informar uma data válida." };
       } else {
-        return {status: true, msg: '' }
+        return { status: true, msg: "" };
       }
     }
   } else {
-    return {status: false, msg: 'Favor informar uma data válida.' }
+    return { status: false, msg: "Favor informar uma data válida." };
   }
 }
 
 export function getCopyItemsObj(items, listId) {
-  const itemsArr = toArray(items)
-  let newItemsObj = {}
-  itemsArr.map( item => {
-    const itemId = creatId('item', listId)
-    const { product, category, qtd, punit, ptotal } = item
-    return newItemsObj[itemId] = {
+  const itemsArr = toArray(items);
+  let newItemsObj = {};
+  itemsArr.map((item) => {
+    const itemId = creatId("item", listId);
+    const { product, category, qtd, punit, ptotal } = item;
+    return (newItemsObj[itemId] = {
       id: itemId,
       product,
       category,
       qtd,
       punit,
       ptotal,
-      check: false
-    }
-  })
-  return newItemsObj
+      check: false,
+    });
+  });
+  return newItemsObj;
 }
 
 export function getNewItemObj(listId, itemId, product, category, qtd, price) {
-  let objItemId
-  if(itemId) {
-    objItemId = itemId 
+  let objItemId;
+  if (itemId) {
+    objItemId = itemId;
   } else {
-    objItemId = creatId('item', listId)
+    objItemId = creatId("item", listId);
   }
-  const pUnitNum = formatToFloat(price)
-  const pUnitStr = convertMathToBRL(pUnitNum)
-  const pTotalNum = pUnitNum * qtd
-  const pTotalStr = convertMathToBRL(pTotalNum)
+  const pUnitNum = formatToFloat(price);
+  const pUnitStr = convertMathToBRL(pUnitNum);
+  const pTotalNum = pUnitNum * qtd;
+  const pTotalStr = convertMathToBRL(pTotalNum);
   return {
     id: objItemId,
+    category,
     obj: {
       id: objItemId,
       product,
@@ -149,31 +153,31 @@ export function getNewItemObj(listId, itemId, product, category, qtd, price) {
       punit: {
         edit: price,
         num: pUnitNum,
-        str: pUnitStr
+        str: pUnitStr,
       },
       ptotal: {
         num: pTotalNum,
-        str: pTotalStr
+        str: pTotalStr,
       },
-      check: false
-    }
-  }
+      check: false,
+    },
+  };
 }
 
 export function dateFormat(date) {
-  if (date !== '') {
-    const dateArr = date.split('-', 3)
-    return `${dateArr[2]}/${dateArr[1]}/${dateArr[0]}`
+  if (date !== "") {
+    const dateArr = date.split("-", 3);
+    return `${dateArr[2]}/${dateArr[1]}/${dateArr[0]}`;
   } else {
-    return date
+    return date;
   }
 }
 
 export function concatArrays(cat1, cat2, cat3, cat4) {
-  let newArr = []
-  Array.prototype.push.apply(newArr, cat1)
-  Array.prototype.push.apply(newArr, cat2)
-  Array.prototype.push.apply(newArr, cat3)
-  Array.prototype.push.apply(newArr, cat4)
-  return newArr
+  let newArr = [];
+  Array.prototype.push.apply(newArr, cat1);
+  Array.prototype.push.apply(newArr, cat2);
+  Array.prototype.push.apply(newArr, cat3);
+  Array.prototype.push.apply(newArr, cat4);
+  return newArr;
 }

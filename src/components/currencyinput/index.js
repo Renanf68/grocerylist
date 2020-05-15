@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Input } from "reactstrap";
 
-const repeatZeroes = times => {
+const repeatZeroes = (times) => {
   let result = "";
   let i = 0;
   for (i = 0; i < times; i++) {
@@ -11,14 +11,7 @@ const repeatZeroes = times => {
   return result;
 };
 const removeOccurrences = (from, toRemove) => {
-  /*const NewToRemove = toRemove.replace(
-    /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g,
-    "\\$&"
-  );*/
-  const NewToRemove = toRemove.replace(
-    /[-[\]/{}()*+?.\\^$|]/g,
-    "\\$&"
-  );
+  const NewToRemove = toRemove.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
   const re = new RegExp(NewToRemove, "g");
   return from.replace(re, "");
 };
@@ -60,12 +53,12 @@ export const formattedRawValue = (rawValue, props) => {
   return result;
 };
 
-const CurrencyInput = props => {
+const CurrencyInput = (props) => {
   const [state, setState] = useState(0);
   useEffect(() => {
     setState(props.value);
   }, [props]);
-  const getRawValue = displayedValue => {
+  const getRawValue = (displayedValue) => {
     let result = displayedValue;
     result = removeOccurrences(result, props.delimiter);
     result = removeOccurrences(result, props.separator);
@@ -73,10 +66,10 @@ const CurrencyInput = props => {
     const intValue = parseInt(result);
     return intValue;
   };
-  const notifyParentWithRawValue = rawValue => {
+  const notifyParentWithRawValue = (rawValue) => {
     return props.onInputChange(rawValue);
   };
-  const onInputType = event => {
+  const onInputType = (event) => {
     const input = event.target.value;
     let rawValue = getRawValue(input);
     if (!rawValue) {
@@ -100,7 +93,7 @@ CurrencyInput.propTypes = {
   onInputChange: PropTypes.func,
   precision: PropTypes.number,
   separator: PropTypes.string,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 CurrencyInput.defaultProps = {
@@ -109,7 +102,7 @@ CurrencyInput.defaultProps = {
   separator: ",",
   delimiter: ".",
   unit: "R$",
-  onInputChange: () => {}
+  onInputChange: () => {},
 };
 
 export default CurrencyInput;
