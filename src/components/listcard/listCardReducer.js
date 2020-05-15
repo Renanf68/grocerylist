@@ -45,18 +45,24 @@ export const listCardReducer = (state, action) => {
     case "GET_LIST":
       const listAlias = action.payload.alias;
       const listStatus = action.payload.status;
-      const food = action.payload.items.food
-        ? toArray(action.payload.items.food)
-        : [];
-      const hygiene = action.payload.items.hygiene
-        ? toArray(action.payload.items.hygiene)
-        : [];
-      const cleaning = action.payload.items.cleaning
-        ? toArray(action.payload.items.cleaning)
-        : [];
-      const others = action.payload.items.others
-        ? toArray(action.payload.items.others)
-        : [];
+      let food = [];
+      let hygiene = [];
+      let cleaning = [];
+      let others = [];
+      if (action.payload.items) {
+        food = action.payload.items.food
+          ? toArray(action.payload.items.food)
+          : [];
+        hygiene = action.payload.items.hygiene
+          ? toArray(action.payload.items.hygiene)
+          : [];
+        cleaning = action.payload.items.cleaning
+          ? toArray(action.payload.items.cleaning)
+          : [];
+        others = action.payload.items.others
+          ? toArray(action.payload.items.others)
+          : [];
+      }
       const total =
         food.map((prod) => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0) +
         hygiene.map((prod) => prod.ptotal.num).reduce((n1, n2) => n1 + n2, 0) +
