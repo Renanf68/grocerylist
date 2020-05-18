@@ -22,7 +22,6 @@ const Lists = (props) => {
   const [remove, setRemove] = useState({ status: false, list: {} });
   const [cwidth, setCwidth] = useState(0);
   window.addEventListener("resize", getClientWidth);
-  let clientW;
   useEffect(() => {
     databaseReftoLoad.on("value", function (snapshot) {
       const list = snapshot.val();
@@ -33,15 +32,11 @@ const Lists = (props) => {
     return () => databaseReftoLoad.off();
   }, []);
   useEffect(() => {
-    let clientW =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
-    setCwidth(clientW);
+    getClientWidth();
     return window.removeEventListener("resize", () => {});
   }, []);
   function getClientWidth() {
-    clientW =
+    let clientW =
       window.innerWidth ||
       document.documentElement.clientWidth ||
       document.body.clientWidth;
