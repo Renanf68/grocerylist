@@ -1,6 +1,18 @@
 import toArray from "lodash.toarray";
 import { database } from "./firebaseApp";
 
+export function getClientDimentions() {
+  let clientW =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+  let clientH =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.body.clientHeight;
+  return { clientW, clientH };
+}
+
 export function handleAuthError(code) {
   console.log(code);
   if (code === "auth/wrong-password") {

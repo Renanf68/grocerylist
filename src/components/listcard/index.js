@@ -8,14 +8,14 @@ import {
 import { FaEdit, FaUndo } from "react-icons/fa";
 import { database } from "../../firebaseApp";
 import { listCardReducer, initialState } from "./listCardReducer";
-import { concatArrays } from "../../utils";
+import { concatArrays, getClientDimentions } from "../../utils";
 import { DndProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
+import TouchBackend from "react-dnd-touch-backend";
 import ListTable from "./ListTable";
 import NewItemForm from "./NewItemForm";
 import CloseListForm from "./CloseListForm";
 import RemoveVerification from "../removeverification";
-
 import "./styles.css";
 
 const ListCard = ({ history, match }) => {
@@ -26,6 +26,14 @@ const ListCard = ({ history, match }) => {
     user,
     listId,
   ]);
+  useEffect(() => {
+    const { clientW, clientH } = getClientDimentions();
+    let status = false;
+    if (clientW < 450 || clientH < 450) {
+      status = true;
+    }
+    dispatch({ type: "IS_MOBILE", payload: status });
+  }, []);
   useEffect(() => {
     dispatch({ type: "SET_LIST_ID", payload: listId });
   }, [listId]);
@@ -124,7 +132,7 @@ const ListCard = ({ history, match }) => {
     { title: "Outros", type: "others" },
   ];
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={state.isMobile ? TouchBackend : HTML5Backend}>
       <div className="component-wraped">
         <Row>
           <Col xs={8} className="list-header-title">

@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { database } from "../../firebaseApp";
 import { FaEye, FaRegCopy } from "react-icons/fa";
 import { MdScreenRotation } from "react-icons/md";
+import { getClientDimentions } from "../../utils";
 import toArray from "lodash.toarray";
 
 import ListsTable from "./ListsTable";
@@ -36,10 +37,7 @@ const Lists = (props) => {
     return window.removeEventListener("resize", () => {});
   }, []);
   function getClientWidth() {
-    let clientW =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
+    const { clientW } = getClientDimentions();
     return setCwidth(clientW);
   }
   function redirectTolist(listId) {

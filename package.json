@@ -10,6 +10,7 @@
     "react": "^16.9.0",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
+    "react-dnd-touch-backend": "^10.0.2",
     "react-dom": "^16.9.0",
     "react-icons": "^3.7.0",
     "react-router-dom": "^5.0.1",

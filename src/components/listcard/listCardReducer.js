@@ -25,6 +25,7 @@ export const initialState = {
     category: "",
     product: "",
   },
+  isMobile: true,
   listId: "",
   listAlias: "",
   listStatus: "open",
@@ -219,6 +220,11 @@ export const listCardReducer = (state, action) => {
       return {
         ...state,
         message: action.payload,
+      };
+    case "IS_MOBILE":
+      return {
+        ...state,
+        isMobile: action.payload,
       };
     default:
       return state;
