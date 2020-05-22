@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "reactstrap";
-import { convertMathToBRL } from "../../utils";
+import { convertMathToBRL, getArrSortByIdx } from "../../utils";
 import ListTableItem from "./ListTableItem";
 
 const ListTable = (props) => {
+  const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
   useEffect(() => {
+    const products = getArrSortByIdx(props.products);
     const newTotal = props.products
       .map((p) => p.ptotal.num)
       .reduce((n1, n2) => n1 + n2, 0);
     const totalStr = convertMathToBRL(newTotal);
+    setList(products);
     setTotal(totalStr);
   }, [props.products]);
   return (
@@ -25,8 +28,8 @@ const ListTable = (props) => {
         </tr>
       </thead>
       <tbody>
-        {props.products.length > 0 ? (
-          props.products.map((item, i) => (
+        {list.length > 0 ? (
+          list.map((item, i) => (
             <ListTableItem
               item={item}
               key={i}
@@ -34,6 +37,7 @@ const ListTable = (props) => {
               remove={props.remove}
               editing={props.editing}
               itemCheck={props.itemCheck}
+              changeItemPosition={props.changeItemPosition}
             />
           ))
         ) : (

@@ -12,7 +12,7 @@ const ListTableItem = (props) => {
   const ref = useRef();
   const { id, category, product, qtd, punit, ptotal, check } = props.item;
   const [{ isDragging }, dragRef] = useDrag({
-    item: { type: "ITEM", index: props.index, id },
+    item: { type: "ITEM", index: props.index, id, category },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -21,8 +21,13 @@ const ListTableItem = (props) => {
     accept: "ITEM",
     hover(item, monitor) {
       const draggedIndex = item.index;
+      const draggedCat = item.category;
       const targetIndex = props.index;
+      const targetCat = category;
       if (draggedIndex === targetIndex) {
+        return;
+      }
+      if (draggedCat !== targetCat) {
         return;
       }
       const targetSize = ref.current.getBoundingClientRect();
@@ -45,19 +50,13 @@ const ListTableItem = (props) => {
       ) {
         return;
       }
-      /*Pegar o objeto inteiro dos itens "arrastado" e "alvo" pra checar se 
-      fazem parte da mesma lista (food, hygiene e etc). 
-      Criar um campo "index" para cada item no database, rodar um ".orderBy("index"),
-      no load do database e criar função para alterar o index do arrastado - para a 
-      posição de drop - e deslocar os outros itens da mesma lista (food, por exp),
-      que estiverem abaixo, um index abaixo.
-      ou checar se tem como fazer a alteração de index direto no database*/
-      console.log("teste", draggedIndex - targetIndex);
+      props.changeItemPosition(draggedCat, draggedIndex, targetIndex);
+      item.index = targetIndex;
     },
   });
   dragRef(dropRef(ref));
   return (
-    <tr key={id} ref={ref} className={isDragging ? "is-dragging" : null}>
+    <tr key={id} ref={ref} /*className={isDragging ? "is-dragging" : null}*/>
       <td className="grab-item">
         <FaEllipsisV />
       </td>

@@ -100,7 +100,7 @@ const ListCard = ({ history, match }) => {
   }
   function handleCheck(item) {
     databaseRef
-      .child(`items/${item.id}/`)
+      .child(`items/${item.category}/${item.id}/`)
       .update({ check: !item.check })
       .catch((err) => console.log("Check err", err));
   }
@@ -113,7 +113,7 @@ const ListCard = ({ history, match }) => {
     );
     itemsArr.map((item) => {
       return databaseRef
-        .child(`items/${item.id}/`)
+        .child(`items/${item.category}/${item.id}/`)
         .update({ check: true })
         .catch((err) => console.log("CheckAll err", err));
     });
@@ -125,14 +125,47 @@ const ListCard = ({ history, match }) => {
       .then(history.push("/app"))
       .catch((err) => console.log("Fechamento de lista err", err));
   }
+  function changeItemPosition(category, dragIndex, dropIndex) {
+    let list = state[category];
+    const dragged = list[dragIndex];
+    list.splice(dragIndex, 1);
+    list.splice(dropIndex, 0, dragged);
+
+    const newList = list.map((item, index) => {
+      return {
+        ...item,
+        idx: index,
+      };
+    });
+    let newObj = {};
+    newList.map((item) => (newObj[item.id] = item));
+    databaseRef
+      .child(`items/${category}/`)
+      .set(newObj)
+      .then(
+        () => {
+          console.log("dropped!!!");
+        },
+        (err) => console.log(err)
+      );
+    return;
+  }
   const categories = [
     { title: "Alimentação", type: "food" },
     { title: "Higiene", type: "hygiene" },
     { title: "Limpeza", type: "cleaning" },
     { title: "Outros", type: "others" },
   ];
+  const opts = {
+    enableMouseEvents: true,
+    enableHoverOutsideTarget: true,
+  };
   return (
-    <DndProvider backend={state.isMobile ? TouchBackend : HTML5Backend}>
+    <DndProvider
+      backend={state.isMobile ? TouchBackend : HTML5Backend}
+      //backend={HTML5Backend}
+      options={state.isMobile ? opts : null}
+    >
       <div className="component-wraped">
         <Row>
           <Col xs={8} className="list-header-title">
@@ -200,6 +233,7 @@ const ListCard = ({ history, match }) => {
                     editing={editingItemObj}
                     remove={removeItemConfirm}
                     itemCheck={handleCheck}
+                    changeItemPosition={changeItemPosition}
                   />
                 </Fragment>
               );

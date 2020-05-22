@@ -1,6 +1,23 @@
 import toArray from "lodash.toarray";
 import { database } from "./firebaseApp";
 
+export function getArrSortByIdx(arr) {
+  if (arr[0].idx) {
+    const newArr = arr.sort(function (a, b) {
+      if (a.idx > b.idx) {
+        return 1;
+      }
+      if (a.idx < b.idx) {
+        return -1;
+      }
+      return 0;
+    });
+    return newArr;
+  } else {
+    return arr;
+  }
+}
+
 export function getClientDimentions() {
   let clientW =
     window.innerWidth ||
