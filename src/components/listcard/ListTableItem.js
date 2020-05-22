@@ -1,12 +1,6 @@
 import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import {
-  FaEdit,
-  FaTrashAlt,
-  FaCheck,
-  FaUndo,
-  FaEllipsisV,
-} from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaCheck, FaUndo } from "react-icons/fa";
 
 const ListTableItem = (props) => {
   const ref = useRef();
@@ -56,10 +50,7 @@ const ListTableItem = (props) => {
   });
   dragRef(dropRef(ref));
   return (
-    <tr key={id} ref={ref} /*className={isDragging ? "is-dragging" : null}*/>
-      <td className="grab-item">
-        <FaEllipsisV />
-      </td>
+    <tr key={id} ref={ref} className={isDragging ? "is-dragging" : null}>
       {check ? (
         <td className="list-card-prodct-name">{product}</td>
       ) : (

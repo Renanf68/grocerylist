@@ -19,7 +19,6 @@ const ListTable = (props) => {
     <Table responsive size="sm" className="list-table list-card">
       <thead>
         <tr>
-          <th title="arastar"></th>
           <th title="Nome do produto">Produto</th>
           <th title="Quantidade">Qtd.</th>
           <th title="Preço unitário">Preço unitário</th>

@@ -28,7 +28,7 @@ const NewItemForm = (props) => {
     setItemId(null);
     setProduct("");
     setCategory("food");
-    setQtd(0);
+    setQtd(1);
     setPrice(0);
   }
   function handleToggle() {
