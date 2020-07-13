@@ -3,13 +3,13 @@ import 'firebase/database'
 import 'firebase/auth'
 
 var firebaseConfig = {
-  apiKey: "AIzaSyCTej5j5pXWvoWJDQQdCqfLvWwkUhKYiBU",
+  apiKey: "XXXXXXXX",
   authDomain: "grocerylist-web.firebaseapp.com",
   databaseURL: "https://grocerylist-web.firebaseio.com",
   projectId: "grocerylist-web",
   storageBucket: "",
-  messagingSenderId: "1068505924100",
-  appId: "1:1068505924100:web:93b901a7414b82d5"
+  messagingSenderId: "00000000",
+  appId: "0:000000000000:web:0000000000"
 };
 
 firebase.initializeApp(firebaseConfig);
